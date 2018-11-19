@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'sparql',
     'stats',
     'arche',
+    'summaries',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"
