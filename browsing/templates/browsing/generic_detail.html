@@ -18,6 +18,9 @@
                 </div>
                 <div class="col-md-8">
                     <h2 style="text-align: center;">
+                        {% if object.get_listview_url %}
+                            <a href="{{ object.get_listview_url }}"><small>{{ object.get_class_name }}:</small></a>
+                        {% endif %}
                         {{ object }}
                         {% if user.is_authenticated %}
                             <small>
