@@ -9,7 +9,6 @@ if 'bib' in settings.INSTALLED_APPS:
     from bib.api_views import ZotItemViewSet
 
 
-
 router = routers.DefaultRouter()
 router.register(r'geojson', GeoJsonViewSet, base_name='places')
 router.register(r'metadata', api_views.MetadataViewSet)
@@ -29,6 +28,7 @@ urlpatterns = [
     url(r'^arche/', include('arche.urls', namespace='arche')),
     url(r'^sparql/', include('sparql.urls', namespace='sparql')),
     url(r'^vocabs/', include('vocabs.urls', namespace='vocabs')),
+    url(r'^summaries/', include('summaries.urls', namespace='summaries')),
     url(r'^vocabs-ac/', include('vocabs.dal_urls', namespace='vocabs-ac')),
     url(r'^entities-ac/', include('entities.dal_urls', namespace='entities-ac')),
     url(r'^entities/', include('entities.urls', namespace='entities')),

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from . models import VerfachBuch, VfbEntry
+
+admin.site.register(VerfachBuch)
+admin.site.register(VfbEntry)

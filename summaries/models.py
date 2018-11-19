@@ -25,13 +25,13 @@ class VerfachBuch(IdProvider):
     )
 
     def get_next(self):
-        next = Verfachbuch.objects.filter(id__gt=self.id)
+        next = VerfachBuch.objects.filter(id__gt=self.id)
         if next:
             return next.first().id
         return False
 
     def get_prev(self):
-        prev = Verfachbuch.objects.filter(id__lt=self.id).order_by('-id')
+        prev = VerfachBuch.objects.filter(id__lt=self.id).order_by('-id')
         if prev:
             return prev.first().id
         return False
@@ -84,6 +84,11 @@ class VfbEntry(IdProvider):
         verbose_name="Erwähnte Institutionen",
         help_text="Identifizierbare Institutionen, die im Eintrag erwähnt werden.",
         related_name="mentioned_in_entry"
+    )
+    inventory = models.BooleanField(
+        null=True,
+        verbose_name="Invenatar",
+        help_text="Umfasst der Verfachbucheintrag ein Inventar"
     )
 
     def get_next(self):

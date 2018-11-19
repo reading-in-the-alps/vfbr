@@ -636,4 +636,3 @@ def get_all_children(self, include_self=True):
         if 0 < len(_r):
             r.extend(_r)
     return r
-
