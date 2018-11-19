@@ -24,6 +24,23 @@ class VerfachBuch(IdProvider):
         help_text="Verfachbuch des Jahres JJJJ"
     )
 
+    @classmethod
+    def get_listview_url(self):
+        return reverse('summaries:verfachbuecher_browse')
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('summaries:verfachbuch_create')
+
+    def get_absolute_url(self):
+        return reverse('summaries:verfachbuch_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('summaries:verfachbuch_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('summaries:verfachbuch_edit', kwargs={'pk': self.id})
+
     def get_next(self):
         next = VerfachBuch.objects.filter(id__gt=self.id)
         if next:
@@ -90,6 +107,23 @@ class VfbEntry(IdProvider):
         verbose_name="Invenatar",
         help_text="Umfasst der Verfachbucheintrag ein Inventar"
     )
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('summaries:verfachbucheintrag_browse')
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('summaries:verfachbucheintrag_create')
+
+    def get_absolute_url(self):
+        return reverse('summaries:verfachbucheintrag_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('summaries:verfachbucheintrag_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('summaries:verfachbucheintrag_edit', kwargs={'pk': self.id})
 
     def get_next(self):
         next = VfbEntry.objects.filter(id__gt=self.id)
