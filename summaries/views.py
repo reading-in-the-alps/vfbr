@@ -24,10 +24,18 @@ class VfbEntryListView(GenericListView):
         'inventory',
     ]
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VfbEntryListView, self).dispatch(*args, **kwargs)
+
 
 class VfbEntryDetailView(DetailView):
     model = VfbEntry
     template_name = 'summaries/verfachbucheintrag_detail.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VfbEntryDetailView, self).dispatch(*args, **kwargs)
 
 
 class VfbEntryCreate(BaseCreateView):
@@ -71,10 +79,18 @@ class VerfachBuchListView(GenericListView):
         'year',
     ]
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VerfachBuchListView, self).dispatch(*args, **kwargs)
+
 
 class VerfachBuchDetailView(DetailView):
     model = VerfachBuch
     template_name = 'summaries/verfachbuch_detail.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VerfachBuchDetailView, self).dispatch(*args, **kwargs)
 
 
 class VerfachBuchCreate(BaseCreateView):
