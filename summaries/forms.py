@@ -27,6 +27,7 @@ class VfbEntryFilterFormHelper(FormHelper):
                     'Basic search options',
                     'entry_signatur',
                     'located_in__year',
+                    'adm_action_type',
                     css_id="basic_search_fields"
                     ),
                 )

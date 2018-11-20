@@ -19,6 +19,21 @@ class VfbEntryListFilter(django_filters.FilterSet):
         help_text=VerfachBuch._meta.get_field('year').help_text,
         label=VerfachBuch._meta.get_field('year').verbose_name
     )
+    adm_action_type = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.filter(
+            collection__name__icontains="adm-action-type"
+        ),
+        help_text=VfbEntry._meta.get_field('adm_action_type').help_text,
+        label=VfbEntry._meta.get_field('adm_action_type').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/concept-by-colleciton-ac/adm-action-type",
+            attrs={
+                'data-placeholder': 'Autocomplete ...',
+                'data-minimum-input-length': 0,
+                },
+        )
+    )
 
 
 class VerfachBuchListFilter(django_filters.FilterSet):

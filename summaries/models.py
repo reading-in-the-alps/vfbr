@@ -104,7 +104,7 @@ class VfbEntry(IdProvider):
     )
     inventory = models.BooleanField(
         null=True,
-        verbose_name="Invenatar",
+        verbose_name="Inventar",
         help_text="Umfasst der Verfachbucheintrag ein Inventar"
     )
 
