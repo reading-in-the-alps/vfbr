@@ -14,7 +14,7 @@ PROJECT_METADATA = {
     'purpose_de': 'Ziel von RITA-VFBR ist die Veröffentlichung von Forschungsdaten.',
     'purpose_en': 'The purpose of RITA-VFBR is the publication of research data.',
     'version': '0.0.1',
-    'matomo_id': 'provide some',
+    'matomo_id': '110',
     'matomo_url': '//matomo.acdh.oeaw.ac.at/',
     'imprint': '/imprint',
     'social_media': [
