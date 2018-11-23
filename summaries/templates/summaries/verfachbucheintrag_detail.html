@@ -32,6 +32,40 @@
                 </td>
             </tr>
         </table>
+        {% if object.annotations %}
+            <legend>Annotationen</legend>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Maschine
+                        </th>
+                        <th>
+                            Mensch
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in object.annotations.all %}
+                        <tr>
+                            <td>
+                                <a href="{{ x.get_absolute_url }}">entities</a>
+                            </th>
+                            <td>
+                                {{ x.entity_json|safe }}
+                            </td>
+                            <td>
+                                {{ x.entity_checked|safe }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
