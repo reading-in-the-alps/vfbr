@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from rest_framework import routers
 from entities.apis_views import PlaceViewSet, GeoJsonViewSet
+from annotations.api_views import NerSampleViewSet
 from vocabs import api_views
 
 if 'bib' in settings.INSTALLED_APPS:
@@ -18,6 +19,7 @@ router.register(r'skosconceptschemes', api_views.SkosConceptSchemeViewSet)
 router.register(r'skoscollections', api_views.SkosCollectionViewSet)
 router.register(r'skosconcepts', api_views.SkosConceptViewSet)
 router.register(r'places', PlaceViewSet)
+router.register(r'nersample', NerSampleViewSet)
 if 'bib' in settings.INSTALLED_APPS:
     router.register(r'zotitems', ZotItemViewSet)
 
@@ -33,6 +35,9 @@ urlpatterns = [
     url(r'^entities-ac/', include('entities.dal_urls', namespace='entities-ac')),
     url(r'^entities/', include('entities.urls', namespace='entities')),
     url(r'^charts/', include('charts.urls', namespace='charts')),
+    url(
+        r'^annotations/', include('annotations.urls', namespace='annotations')
+    ),
     url(r'^', include('webpage.urls', namespace='webpage')),
 ]
 

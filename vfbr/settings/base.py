@@ -42,13 +42,21 @@ INSTALLED_APPS = [
     'arche',
     'summaries',
     'charts',
+    'annotations',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
+
+CSRF_USE_SESSIONS = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,6 +85,7 @@ TEMPLATES = [
                 'webpage.webpage_content_processors.installed_apps',
                 'webpage.webpage_content_processors.is_dev_version',
                 'webpage.webpage_content_processors.get_db_name',
+                'annotations.annotations_content_processors.annotation_scores',
             ],
         },
     },

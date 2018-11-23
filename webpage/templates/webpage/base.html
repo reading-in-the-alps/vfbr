@@ -37,7 +37,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
     <!-- End Cookie Consent plugin -->
     <!-- Matomo -->
-      <!-- <script type="text/javascript">
+      <script type="text/javascript">
         var _paq = _paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(['trackPageView']);
@@ -49,7 +49,7 @@
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
           g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
         })();
-      </script> -->
+      </script>
     <!-- End Matomo Code -->
     {% block scriptHeader %}
     {% endblock %}
@@ -100,16 +100,23 @@
 
                                     {% if user.is_authenticated %}
                                         <div class="dropdown-divider"></div>
-                                        {% nav_menu app='arche' as links %}
+                                        <!-- {% nav_menu app='arche' as links %}
+                                        {% for x in links %}
+
+                                                <a class="dropdown-item" href="{{ x.link}}">{{ x.name }}</a>
+
+                                        {% endfor %} -->
+                                        {% if 'bib' in apps %}
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{% url 'bib:synczotero' %}">Import new Items from Zotero</a>
+                                        {% endif %}
+                                        <a class="dropdown-item" href="{% url 'annotations:browse_nersamples_todo' %}">please check me!</a>
+                                        {% nav_menu app='annotations' as links %}
                                         {% for x in links %}
 
                                                 <a class="dropdown-item" href="{{ x.link}}">{{ x.name }}</a>
 
                                         {% endfor %}
-                                        {% if 'bib' in apps %}
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{% url 'bib:synczotero' %}">Import new Items from Zotero</a>
-                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </li>
@@ -203,6 +210,14 @@
                     {% if DB_NAME %}
                         <div class="footer-imprint-bar">
                             <small>{{ DB_NAME }}</small>
+                        </div>
+                        <div>
+                            <small>
+                                all: {{ nr_all }}<br />
+                                checked: {{ nr_checked }} <br />
+                                cohen_kappa_score: {{ cks_str }}
+                                fscore: {{ f1_str.2 }}
+                            </small>
                         </div>
                     {% endif %}
                 {% endif %}
