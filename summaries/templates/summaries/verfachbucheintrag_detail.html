@@ -31,6 +31,18 @@
                     <a href="{{ object.located_in.get_absolute_url }}">{{ object.located_in }}</a>
                 </td>
             </tr>
+            <tr>
+                <th>
+                    Erwähnte Personen
+                </th>
+                <td>
+                    {% for x in object.mentioned_person.all %}
+                        <li>
+                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                        </li>
+                    {% endfor %}
+                </td>
+            </tr>
         </table>
         {% if object.annotations %}
             <legend>Annotationen</legend>
@@ -53,7 +65,7 @@
                         <tr>
                             <td>
                                 <a href="{{ x.get_absolute_url }}">entities</a>
-                            </th>
+                            </td>
                             <td>
                                 {{ x.entity_json|safe }}
                             </td>

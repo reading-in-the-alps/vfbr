@@ -126,3 +126,12 @@ class NerSample(models.Model):
                 }
             )
         return sents
+
+    def return_ents(self):
+        ents = []
+        for x in self.make_html_samples():
+            if x['start'] is None:
+                pass
+            else:
+                ents.append(x['sent'][x['start']:x['end']])
+        return ents
