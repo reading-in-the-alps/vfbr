@@ -27,7 +27,7 @@ def create_ner_samples_from_list(ner_list, limit=10):
             )
 
 
-def create_ner_sample_from_qs(app_label, model_label, textfield, endpoint, limit=None):
+def create_ner_sample_from_qs(app_label, model_label, textfield, endpoint, start=0, limit=None):
     url = endpoint
     try:
         ct = ContentType.objects.get(app_label=app_label, model=model_label).model_class()
@@ -40,7 +40,7 @@ def create_ner_sample_from_qs(app_label, model_label, textfield, endpoint, limit
                 limit = int(limit)
             except TypeError:
                 limit = qs.count()
-            for x in qs[:limit]:
+            for x in qs[start:limit]:
                 obj_text = getattr(x, textfield, 'None')
                 if obj_text:
                     text = "{}".format(obj_text).strip()
