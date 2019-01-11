@@ -21,7 +21,8 @@ TAG_COLORS = {
     "PER": '#007bff',
     "LOC": '#5a6268',
     "ORG": "#28a745",
-    "MISC": '#17a2b8'
+    "MISC": '#17a2b8',
+    "OBJECT": '#5a6268'
 }
 
 
