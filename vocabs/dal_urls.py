@@ -60,7 +60,7 @@ urlpatterns = [
         name='specific-concept-ac',
     ),
     path(
-        r'concept-by-colleciton-ac/<str:scheme>', dal_views.SpecificConceptsByCollection.as_view(
+        r'concept-by-colleciton-ac/<str:collection>', dal_views.SpecificConceptsByCollection.as_view(
             model=SkosConcept),
         name='concept-by-collection-ac',
     )

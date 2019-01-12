@@ -11,7 +11,7 @@ class SpecificConceptsByCollection(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         try:
             collection = self.kwargs['collection']
-            selected_collection = SkosConceptScheme.objects.filter(name__icontains=collection)
+            selected_collection = SkosCollection.objects.filter(name__icontains=collection)
         except KeyError:
             selected_collection = None
         if selected_collection:
@@ -24,7 +24,7 @@ class SpecificConceptsByCollection(autocomplete.Select2QuerySetView):
             plus_narrower = direct_match | qs.filter(broader_concept__in=direct_match)
             return plus_narrower
 
-        return []
+        return qs
 
 
 class SpecificConcepts(autocomplete.Select2QuerySetView):

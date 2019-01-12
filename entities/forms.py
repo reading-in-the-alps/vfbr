@@ -18,16 +18,15 @@ class PersonFilterFormHelper(FormHelper):
             Fieldset(
                 'Basic search options',
                 'name',
+                'forename'
                 'written_name',
                 css_id="basic_search_fields"
                 ),
             Accordion(
                 AccordionGroup(
                     'Advanced search',
-                    'acad_title',
                     'alt_names',
-                    'authority_url',
-                    'belongs_to_institution',
+                    'profession',
                     css_id="more"
                     ),
                 )

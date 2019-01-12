@@ -1,22 +1,9 @@
 import django_filters
 from dal import autocomplete
-from entities.models import Place, AlternativeName, Institution, Person
 
-django_filters.filters.LOOKUP_TYPES = [
-    ('', '---------'),
-    ('exact', 'Is equal to'),
-    ('iexact', 'Is equal to (case insensitive)'),
-    ('not_exact', 'Is not equal to'),
-    ('lt', 'Lesser than/before'),
-    ('gt', 'Greater than/after'),
-    ('gte', 'Greater than or equal to'),
-    ('lte', 'Lesser than or equal to'),
-    ('startswith', 'Starts with'),
-    ('endswith', 'Ends with'),
-    ('contains', 'Contains'),
-    ('icontains', 'Contains (case insensitive)'),
-    ('not_contains', 'Does not contain'),
-]
+from vocabs.models import SkosConcept
+from vocabs.filters import generous_concept_filter
+from entities.models import Place, AlternativeName, Institution, Person
 
 
 class PersonListFilter(django_filters.FilterSet):
@@ -25,10 +12,14 @@ class PersonListFilter(django_filters.FilterSet):
         help_text=Person._meta.get_field('name').help_text,
         label=Person._meta.get_field('name').verbose_name
         )
-    belongs_to_institution = django_filters.ModelMultipleChoiceFilter(
-        queryset=Institution.objects.all(),
-        help_text=Person._meta.get_field('belongs_to_institution').help_text,
-        label=Person._meta.get_field('belongs_to_institution').verbose_name
+    profession = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.all(),
+        help_text=Person._meta.get_field('profession').help_text,
+        label=Person._meta.get_field('profession').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/concept-by-colleciton-ac/profession",
+            )
         )
 
     class Meta:
