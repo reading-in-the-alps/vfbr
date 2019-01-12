@@ -69,6 +69,6 @@ def create_ner_sample_from_qs(app_label, model_label, textfield, endpoint, start
                                 text=y[0]
                             )
                             ner.entity_json = y[1]
-                            ner.entry = x
+                            # ner.entry = x
                             ner.save()
                             yield ner

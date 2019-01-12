@@ -12,7 +12,7 @@ class PersonTable(tables.Table):
         'entities:person_detail',
         args=[A('pk')], verbose_name='Name'
     )
-    forename = tables.Column()
+    profession = tables.ManyToManyColumn()
 
     class Meta:
         model = Person

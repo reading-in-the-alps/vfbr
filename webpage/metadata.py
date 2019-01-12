@@ -9,7 +9,7 @@ PROJECT_METADATA = {
     Gerichte St. Michaelsburg und Bruneck für den Zeitraum 1750 bis 1800 systematisch und\
     vollständig von Michael Span und Michael Prokosch durchgesehen und die darin enthaltenen\
     Einträge in Registerform erfasst. Die vorliegende Web Applikation stellt diesen, primär als\
-    internen Forschungsbehelf konzipierten Datenbestand der öffentlichkeit zur Verfügung.',
+    internen Forschungsbehelf konzipierten Datenbestand der Öffentlichkeit zur Verfügung.',
     'github': 'https://github.com/reading-in-the-alps/vfbr',
     'purpose_de': 'Ziel von RITA-VFBR ist die Veröffentlichung von Forschungsdaten.',
     'purpose_en': 'The purpose of RITA-VFBR is the publication of research data.',

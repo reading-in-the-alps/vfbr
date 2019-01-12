@@ -5,6 +5,7 @@ from idprovider.models import IdProvider
 import reversion
 
 from browsing.browsing_utils import model_to_dict
+from vocabs.models import SkosConcept
 
 from . utils import get_coordinates
 
@@ -222,27 +223,47 @@ class Person(IdProvider):
     written_name = models.CharField(max_length=300, blank=True)
     forename = models.CharField(max_length=300, blank=True)
     name = models.CharField(max_length=300, blank=True)
-    acad_title = models.CharField(max_length=300, blank=True)
+    house_name = models.CharField(max_length=300, blank=True)
     alt_names = models.ManyToManyField(
         AlternativeName,
         max_length=250, blank=True,
         help_text="Alternative names",
         related_name="altname_of_persons"
     )
-    belongs_to_institution = models.ForeignKey(
-        Institution, blank=True, null=True, related_name="has_member",
-        on_delete=models.SET_NULL
+    profession = models.ManyToManyField(
+        SkosConcept, blank=True,
+        verbose_name="Beruf(e)",
+        related_name="is_profession_of"
+    )
+    belongs_to_place = models.ManyToManyField(
+        Place, blank=True,
+        related_name="living_place_for",
+        verbose_name="Wohn- und Wirkungsort(e)",
     )
     place_of_birth = models.ForeignKey(
         Place, blank=True, null=True, related_name="is_birthplace",
+        verbose_name="Geburtsort",
+        on_delete=models.SET_NULL
+    )
+    place_of_death = models.ForeignKey(
+        Place, blank=True, null=True, related_name="is_deathplace",
+        verbose_name="Sterbeort",
         on_delete=models.SET_NULL
     )
     date_of_birth = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True,
-        verbose_name="Date of Birth",
+        verbose_name="Geburtsdatum",
         help_text="YYYY-MM-DD"
     )
-    authority_url = models.CharField(max_length=300, blank=True)
+    date_of_death = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True,
+        verbose_name="Sterbedatum",
+        help_text="YYYY-MM-DD"
+    )
+    belongs_to_institution = models.ForeignKey(
+        Institution, blank=True, null=True, related_name="has_member",
+        on_delete=models.SET_NULL
+    )
     comment = models.TextField(blank=True)
 
     class Meta:
