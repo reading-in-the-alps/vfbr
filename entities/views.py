@@ -23,6 +23,7 @@ class PersonListView(GenericListView):
         'name',
         'authority_url',
     ]
+    enable_merge = True
 
 
 class PersonDetailView(DetailView):

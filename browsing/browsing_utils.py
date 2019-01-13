@@ -82,6 +82,7 @@ class GenericListView(django_tables2.SingleTableView):
     paginate_by = 25
     template_name = 'browsing/generic_list.html'
     init_columns = []
+    enable_merge = False
 
     def get_table_class(self):
         if self.table_class:
@@ -94,8 +95,6 @@ class GenericListView(django_tables2.SingleTableView):
         )
 
     def get_all_cols(self):
-        print('get_table')
-        print(self.get_table().base_columns.keys())
         all_cols = list(self.get_table().base_columns.keys())
         return all_cols
 
@@ -116,6 +115,7 @@ class GenericListView(django_tables2.SingleTableView):
 
     def get_context_data(self, **kwargs):
         context = super(GenericListView, self).get_context_data()
+        context['enable_merge'] = self.enable_merge
         togglable_colums = [x for x in self.get_all_cols() if x not in self.init_columns]
         context['togglable_colums'] = togglable_colums
         context[self.context_filter_name] = self.filter
