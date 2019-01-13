@@ -18,7 +18,7 @@ class PersonFilterFormHelper(FormHelper):
             Fieldset(
                 'Basic search options',
                 'name',
-                'forename'
+                'forename',
                 'written_name',
                 css_id="basic_search_fields"
                 ),
