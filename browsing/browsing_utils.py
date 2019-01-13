@@ -8,6 +8,7 @@ from django.apps import apps
 from django.conf import settings
 from django.db.models.fields.related import ManyToManyField
 from django.http import HttpResponse
+from django.utils.safestring import mark_safe
 from django.views.generic.edit import CreateView, UpdateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
@@ -17,6 +18,22 @@ from . models import BrowsConf
 if 'charts' in settings.INSTALLED_APPS:
     from charts.models import ChartConfig
     from charts.views import create_payload
+
+
+input_form = """
+  <input type="checkbox" name="keep" value="{}" title="keep this"/> |
+  <input type="checkbox" name="remove" value="{}" title="remove this"/>
+"""
+
+
+class MergeColumn(django_tables2.Column):
+    def __init__(self, *args, **kwargs):
+        super(MergeColumn, self).__init__(*args, **kwargs)
+
+    def render(self, value):
+        return mark_safe(
+            input_form.format(value, value)
+        )
 
 
 def get_entities_table(model_class):
@@ -124,6 +141,7 @@ class GenericListView(django_tables2.SingleTableView):
             context['download'] = None
         model_name = self.model.__name__.lower()
         context['entity'] = model_name
+        context['app_name'] = self.model._meta.app_label
         context['conf_items'] = list(
             BrowsConf.objects.filter(model_name=model_name)
             .values_list('field_path', 'label')

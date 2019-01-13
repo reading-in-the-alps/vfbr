@@ -1,5 +1,7 @@
 import django_tables2 as tables
 from django_tables2.utils import A
+
+from browsing.browsing_utils import MergeColumn
 from entities.models import *
 
 
@@ -13,6 +15,7 @@ class PersonTable(tables.Table):
         args=[A('pk')], verbose_name='Name'
     )
     profession = tables.ManyToManyColumn()
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
 
     class Meta:
         model = Person
