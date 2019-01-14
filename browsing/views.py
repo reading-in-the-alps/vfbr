@@ -22,7 +22,7 @@ def merge_objects(request):
         print('##############################')
         print(keep, remove, model_name, app_name)
         if keep and remove and model_name and app_name:
-            print('all good')
+            print("all good, let's merge")
             try:
                 ct = ContentType.objects.get(app_label=app_name, model=model_name).model_class()
             except ObjectDoesNotExist:
@@ -39,6 +39,19 @@ def merge_objects(request):
                         merged_object = MergedModelInstance(keep_obj, x).merge(x)
                         x.delete()
                         print("merged {} into {}".format(x, keep_obj))
-        return HttpResponseRedirect(go_back)
+            return HttpResponseRedirect(go_back)
+        elif remove and model_name and app_name:
+            print("all good, let's delete")
+            try:
+                ct = ContentType.objects.get(app_label=app_name, model=model_name).model_class()
+            except ObjectDoesNotExist:
+                ct = None
+            if ct:
+                remove_objs = ct.objects.filter(pk__in=remove)
+                if len(remove_objs) > 0:
+                    for x in remove_objs:
+                        x.delete()
+                        print("deleted: {}".format(x))
+            return HttpResponseRedirect(go_back)
     else:
         return HttpResponseRedirect(go_back)

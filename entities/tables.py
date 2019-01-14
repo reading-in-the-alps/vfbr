@@ -14,6 +14,7 @@ class PersonTable(tables.Table):
         'entities:person_detail',
         args=[A('pk')], verbose_name='Name'
     )
+    mentioned_in_entry = tables.ManyToManyColumn()
     profession = tables.ManyToManyColumn()
     merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
 

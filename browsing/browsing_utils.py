@@ -27,6 +27,8 @@ input_form = """
 
 
 class MergeColumn(django_tables2.Column):
+    """ renders a column with to checkbox - used to select objects for merging """
+
     def __init__(self, *args, **kwargs):
         super(MergeColumn, self).__init__(*args, **kwargs)
 
@@ -83,6 +85,7 @@ class GenericListView(django_tables2.SingleTableView):
     template_name = 'browsing/generic_list.html'
     init_columns = []
     enable_merge = False
+    enable_delete = False
 
     def get_table_class(self):
         if self.table_class:
