@@ -22,7 +22,8 @@ TAG_COLORS = {
     "LOC": '#5a6268',
     "ORG": "#28a745",
     "MISC": '#17a2b8',
-    "OBJECT": '#5a6268'
+    "OBJECT": '#5a6268',
+    "FALSE": '#5a6268'
 }
 
 
