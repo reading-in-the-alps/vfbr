@@ -1,3 +1,6 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.postgres.fields import JSONField
@@ -40,12 +43,9 @@ class NerSample(models.Model):
         blank=True, null=True, verbose_name="Corrected Annotation",
         help_text="Corrected Annotation"
     )
-    entry = models.ForeignKey(
-        VfbEntry, blank=True, null=True, related_name="annotations",
-        on_delete=models.SET_NULL,
-        verbose_name="Verfachbucheintrag",
-        help_text="Annotation zu Verfacbucheintrag."
-    )
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, on_delete=models.SET_NULL)
+    object_id = models.PositiveIntegerField(blank=True, null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:
         ordering = ['id']
