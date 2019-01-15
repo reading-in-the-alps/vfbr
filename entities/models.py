@@ -1,4 +1,5 @@
 import re
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from idprovider.models import IdProvider
@@ -16,19 +17,6 @@ class AlternativeName(IdProvider):
         max_length=250, blank=True, help_text="Alternative Name"
     )
 
-    # def get_absolute_url(self):
-    #     return reverse(
-    #         'entities:alternativename_detail', kwargs={'pk': self.id}
-    #     )
-    #
-    # @classmethod
-    # def get_listview_url(self):
-    #     return reverse('entities:browse_altnames')
-    #
-    # @classmethod
-    # def get_createview_url(self):
-    #     return reverse('entities:alternativename_create')
-
     def get_next(self):
         next = AlternativeName.objects.filter(id__gt=self.id)
         if next:
@@ -40,11 +28,6 @@ class AlternativeName(IdProvider):
         if prev:
             return prev.first().id
         return False
-
-    # def get_absolute_url(self):
-    #     return reverse(
-    #         'entities:alternativename_detail', kwargs={'pk': self.id}
-    #     )
 
     def __str__(self):
         return "{}".format(self.name)
@@ -310,6 +293,15 @@ class Person(IdProvider):
     def field_dict(self):
         return model_to_dict(self)
 
+    def get_family(self):
+        ct = ContentType.objects.get(app_label='entities', model='personperson').model_class()
+        active = ct.objects.filter(source=self)
+        inverse = ct.objects.filter(target=self)
+        return {
+            "active": active,
+            "inverse": inverse
+        }
+
     def __str__(self):
         if self.written_name:
             return "{}".format(self.written_name)
@@ -319,3 +311,27 @@ class Person(IdProvider):
             return "{}".format(self.name)
         else:
             return "No name provided"
+
+
+class PersonPerson(IdProvider):
+    source = models.ForeignKey(
+        Person, blank=True, null=True,
+        related_name="has_person_a",
+        verbose_name="Person A",
+        on_delete=models.SET_NULL
+    )
+    target = models.ForeignKey(
+        Person, blank=True, null=True,
+        related_name="has_person_b",
+        verbose_name="Person B",
+        on_delete=models.SET_NULL
+    )
+    rel_type = models.ForeignKey(
+        SkosConcept, blank=True, null=True,
+        verbose_name="Art der Verbindung",
+        related_name="relation_type",
+        on_delete=models.SET_NULL
+    )
+
+    def __str__(self):
+        return "{} {} {}".format(self.source, self.rel_type, self.target)

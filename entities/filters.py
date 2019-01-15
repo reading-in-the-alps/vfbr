@@ -12,6 +12,11 @@ class PersonListFilter(django_filters.FilterSet):
         help_text=Person._meta.get_field('name').help_text,
         label=Person._meta.get_field('name').verbose_name
         )
+    written_name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Person._meta.get_field('written_name').help_text,
+        label=Person._meta.get_field('written_name').verbose_name
+        )
     profession = django_filters.ModelMultipleChoiceFilter(
         queryset=SkosConcept.objects.all(),
         help_text=Person._meta.get_field('profession').help_text,

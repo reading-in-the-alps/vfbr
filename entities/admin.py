@@ -11,7 +11,16 @@ class PersonAdmin(admin.ModelAdmin):
     ]
 
 
+class PersonPersonAdmin(admin.ModelAdmin):
+    list_display = [
+        'source',
+        'rel_type',
+        'target',
+    ]
+
+
 admin.site.register(Place, VersionAdmin)
 admin.site.register(AlternativeName, VersionAdmin)
 admin.site.register(Institution, VersionAdmin)
 admin.site.register(Person, PersonAdmin)
+admin.site.register(PersonPerson, PersonPersonAdmin)
