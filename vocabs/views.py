@@ -8,7 +8,10 @@ from django_tables2 import SingleTableView, RequestConfig
 from .models import SkosConcept, SkosConceptScheme, SkosLabel, SkosCollection, Metadata
 from .forms import *
 from .tables import *
-from .filters import SkosConceptListFilter, SkosConceptSchemeListFilter, SkosLabelListFilter, SkosCollectionListFilter
+from .filters import (
+    SkosConceptListFilter, SkosConceptSchemeListFilter,
+    SkosLabelListFilter, SkosCollectionListFilter
+)
 from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
 from .rdf_utils import *
 from django.shortcuts import render, render_to_response
@@ -167,6 +170,7 @@ class SkosConceptListView(GenericListView):
         'pref_label',
         'broader_concept',
     ]
+    enable_merge = True
 
 
 class SkosConceptDetailView(DetailView):
