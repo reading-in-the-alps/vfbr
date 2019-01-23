@@ -59,4 +59,15 @@ for x in create_ner_sample_from_qs(
 
 ### extract the annotated information form the lates NerSamples and store them.
 
-* This step depends on the actual data/task. E.g. for the jobs dataset, Persons could be explicitly linked to SkosConcepts via a ManyToMany field called 'profession'
+* This step depends on the actual data/task. E.g. for the jobs dataset, Persons could be explicitly linked to SkosConcepts via a ManyToMany field called 'profession'. This was done with something like:
+
+```python
+for x in NerSample.objects.exclude():
+    rel_obj = x.content_object
+    for y in x.return_ents():
+        job, _ = SkosConcept.objects.get_or_create(
+                pref_label=y
+            )
+        job.collection.add(prof_coll)
+        rel_obj.profession.add(job)
+```
