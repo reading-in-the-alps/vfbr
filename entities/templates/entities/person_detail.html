@@ -105,12 +105,55 @@
                     <h4 class="card-title">Erwähnt in</h4>
                 </div>
                 <div class="card-body">
-                    {% for x in object.mentioned_in_entry.all %}
-                        <li>
-                            {{ x.vollregest }} <br />
-                            <small><a href="{{ x.get_absolute_url }}">{{ x }}</a></small>
-                        </li>
-                    {% endfor %}
+                    {% if object.mentioned_in_entry.all %}
+                        <legend>
+                            Verfachbucheintrag
+                        </legend>
+                        {% for x in object.mentioned_in_entry.all %}
+                            <li>
+                                {{ x.vollregest }} <br />
+                                <small><a href="{{ x.get_absolute_url }}">{{ x }}</a></small>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if object.is_related_person %}
+                        <legend>
+                            Inventar als verwandte Person
+                        </legend>
+                        {% for x in object.is_related_person.all %}
+                            <li>
+                                <small>
+                                    <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                </small>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if object.is_adm_person.all %}
+                        <legend>
+                            Inventar als adminstrative Person
+                        </legend>
+                        {% for x in object.is_adm_person.all %}
+                            <li>
+                                <small>
+                                    <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                </small>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if object.is_other_person.all %}
+                        <legend>
+                            Inventar als genannte Person
+                        </legend>
+                        {% for x in object.is_other_person.all %}
+                            <li>
+                                <small>
+                                    <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                </small>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>

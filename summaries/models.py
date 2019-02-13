@@ -110,20 +110,21 @@ class InventoryEntry(IdProvider):
     )
     adm_person = models.ManyToManyField(
         Person, blank=True,
-        verbose_name="Erwähnte Personen",
-        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        verbose_name="Beteiligte (administrative) Personen",
+        help_text="Beteiligte Personen (Beamte, Gerichtsverpflichtete, Zeugen, ...).",
         related_name="is_adm_person"
     )
     related_person = models.ManyToManyField(
         Person, blank=True,
-        verbose_name="Erwähnte Personen",
-        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        verbose_name="Beteiligte (nicht-administrative) Personen",
+        help_text="Beteiligte Personen (Erbsinteressenten, Gerhaben, Anweiser,\
+        Verkäufer, Verpächter, Käufer, Pächter, ...).",
         related_name="is_related_person"
     )
     other_person = models.ManyToManyField(
         Person, blank=True,
-        verbose_name="Erwähnte Personen",
-        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        verbose_name="Genannte Personen",
+        help_text="Genannte Personen.",
         related_name="is_other_person"
     )
     barschaft = models.CharField(
@@ -228,7 +229,7 @@ class InventoryEntry(IdProvider):
 
     def __str__(self):
         if self.inv_signatur:
-            return "{}".format(self.entry_signatur)
+            return "{}".format(self.inv_signatur)
         else:
             return "{}".format(self.id)
 
