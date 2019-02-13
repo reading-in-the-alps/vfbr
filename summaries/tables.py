@@ -5,6 +5,26 @@ from entities.models import *
 from . models import *
 
 
+class InventoryEntryTable(tables.Table):
+    id = tables.LinkColumn(
+        'summaries:inventory_detail',
+        args=[A('pk')], verbose_name='ID'
+    )
+    inv_signatur = tables.LinkColumn(
+        'summaries:inventory_detail',
+        args=[A('pk')], verbose_name='Titel'
+    )
+    main_person = tables.ManyToManyColumn()
+    adm_person = tables.ManyToManyColumn()
+    related_person = tables.ManyToManyColumn()
+    other_person = tables.ManyToManyColumn()
+
+    class Meta:
+        model = InventoryEntry
+        sequence = ('id', 'inv_signatur',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
 class VfbEntryTable(tables.Table):
     id = tables.LinkColumn(
         'summaries:verfachbucheintrag_detail',

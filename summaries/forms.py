@@ -7,6 +7,31 @@ from crispy_forms.bootstrap import *
 from . models import *
 
 
+class InventoryEntryForm(forms.ModelForm):
+    class Meta:
+        model = InventoryEntry
+        fields = "__all__"
+
+
+class InventoryEntryFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(InventoryEntryFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Accordion(
+                AccordionGroup(
+                    'Basic search options',
+                    'inv_signatur',
+                    css_id="basic_search_fields"
+                    ),
+                )
+            )
+
+
 class VfbEntryForm(forms.ModelForm):
     class Meta:
         model = VfbEntry

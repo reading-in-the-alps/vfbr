@@ -60,6 +60,179 @@ class VerfachBuch(IdProvider):
             return "{}".format(self.id)
 
 
+BUECHER = (
+    ('Bücher', 'Bücher'),
+    ('keine Bücher', 'keine Bücher'),
+)
+
+MEHRERE_HAUPTPERSONEN = (
+    ('nur eine Hauptperson', 'nur eine Hauptperson'),
+    ('mehrere Personen', 'mehrere Personen')
+)
+
+VOLLSTAENDIG = (
+    ('unklar', 'unklar'),
+    ('unvollständig', 'unvollständig'),
+)
+
+SCHREIBUTENSIELIEN = (
+    ('Lese- und Schreibsachen', 'Lese- und Schreibsachen'),
+    ('keine Lese- und Schreibsachen', 'keine Lese- und Schreibsachen'),
+)
+
+
+class InventoryEntry(IdProvider):
+    """Beschreibt ein Regest eines Inventars"""
+    inv_signatur = models.CharField(
+        max_length=550, blank=True, help_text="Vollzitat des Eintrages",
+        verbose_name="Archivsignatur des Eintrages"
+    )
+    is_located_in = models.ForeignKey(
+        VerfachBuch, blank=True, null=True, related_name="has_inventories",
+        on_delete=models.SET_NULL,
+        verbose_name="Übergeordenter Quellenbestand",
+        help_text="Ist Teil des übergordneten Quellenbestands."
+    )
+    inv_type = models.ForeignKey(
+        SkosConcept, blank=True, null=True,
+        verbose_name="Art des Inventars",
+        help_text="Welche Art von Inventar wurde in diesem Eintrag protokolliert",
+        on_delete=models.SET_NULL
+    )
+    table_row = models.TextField(
+        blank=True, verbose_name="Excel-Sheet Eintrag", help_text="Excel-Sheet Eintrag"
+    )
+    main_person = models.ManyToManyField(
+        Person, blank=True,
+        verbose_name="Erwähnte Personen",
+        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        related_name="is_main_person"
+    )
+    adm_person = models.ManyToManyField(
+        Person, blank=True,
+        verbose_name="Erwähnte Personen",
+        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        related_name="is_adm_person"
+    )
+    related_person = models.ManyToManyField(
+        Person, blank=True,
+        verbose_name="Erwähnte Personen",
+        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        related_name="is_related_person"
+    )
+    other_person = models.ManyToManyField(
+        Person, blank=True,
+        verbose_name="Erwähnte Personen",
+        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
+        related_name="is_other_person"
+    )
+    barschaft = models.CharField(
+        blank=True, null=True, max_length=250,
+        verbose_name="Barschaft (teilweise eigene Berechnung)",
+        help_text="Barschaft (teilweise eigene Berechnung)"
+    )
+    invenatar_summe_norm_fl = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Inventarsumme normiert (Gulden)",
+        help_text="Inventarsumme normiert (Gulden)"
+    )
+    invenatar_summe_norm_kr = models.FloatField(
+        blank=True, null=True,
+        verbose_name="Inventarsumme normiert (Kreuzer)",
+        help_text="Inventarsumme normiert (Kreuzer)"
+    )
+    vor_passiva_fl = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="vor Abzug Passiva (Gulden)",
+        help_text="vor Abzug Passiva (Gulden)"
+    )
+    vor_passiva_kr = models.FloatField(
+        blank=True, null=True,
+        verbose_name="vor Abzug Passiva (Kreuzer)",
+        help_text="vor Abzug Passiva (Kreuzer)"
+    )
+    nach_passiva_fl = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="nach Abzug Passiva (Gulden)",
+        help_text="nach Abzug Passiva (Gulden)"
+    )
+    nach_passiva_kr = models.FloatField(
+        blank=True, null=True,
+        verbose_name="nach Abzug Passiva (Kreuzer)",
+        help_text="nach Abzug Passiva (Kreuzer)"
+    )
+    comment_b = models.TextField(
+        blank=True, null=True,
+        verbose_name="Kommentar zu Spalte B",
+        help_text="Kommentar zu Spalte B"
+    )
+    comment_k = models.TextField(
+        blank=True, null=True,
+        verbose_name="Kommentar zu Spalte K",
+        help_text="Kommentar zu Spalte K"
+    )
+    comment_a = models.TextField(
+        blank=True, null=True,
+        verbose_name="Kommentar zu Spalte A",
+        help_text="Kommentar zu Spalte A"
+    )
+    only_one_person = models.CharField(
+        blank=True, null=True, default="mehrere Personen",
+        choices=MEHRERE_HAUPTPERSONEN, max_length=250,
+        verbose_name="Eine oder mehrere Hauptpersonen?"
+    )
+    buecher = models.TextField(
+        blank=True, null=True,
+        verbose_name="Buch/Bücher",
+        help_text="Buch/Bücher"
+    )
+    buecher_sys = models.CharField(
+        blank=True, null=True, default="keine Bücher",
+        choices=BUECHER, max_length=250,
+        verbose_name="Bücher erwähnt?"
+    )
+    vollstaendig = models.CharField(
+        blank=True, null=True, default="unklar",
+        verbose_name="Inventar vollständig?",
+        choices=VOLLSTAENDIG, max_length=250,
+    )
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('summaries:inventory_browse')
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('summaries:inventory_create')
+
+    def get_absolute_url(self):
+        return reverse('summaries:inventory_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('summaries:inventory_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('summaries:inventory_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = InventoryEntry.objects.filter(id__gt=self.id)
+        if next:
+            return next.first().id
+        return False
+
+    def get_prev(self):
+        prev = InventoryEntry.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return prev.first().id
+        return False
+
+    def __str__(self):
+        if self.inv_signatur:
+            return "{}".format(self.entry_signatur)
+        else:
+            return "{}".format(self.id)
+
+
 class VfbEntry(IdProvider):
     """Beschreibt einen Eintrag in einem Verfachbuch"""
     entry_signatur = models.CharField(

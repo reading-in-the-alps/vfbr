@@ -121,3 +121,59 @@ class VerfachBuchDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(VerfachBuchDelete, self).dispatch(*args, **kwargs)
+
+
+class InventoryEntryListView(GenericListView):
+    model = InventoryEntry
+    filter_class = InventoryEntryListFilter
+    formhelper_class = InventoryEntryFilterFormHelper
+    table_class = InventoryEntryTable
+    init_columns = [
+        'id',
+        'located_in',
+        'adm_action_type',
+        'inventory',
+    ]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InventoryEntryListView, self).dispatch(*args, **kwargs)
+
+
+class InventoryEntryDetailView(DetailView):
+    model = InventoryEntry
+    template_name = 'summaries/inventory_detail.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InventoryEntryDetailView, self).dispatch(*args, **kwargs)
+
+
+class InventoryEntryCreate(BaseCreateView):
+
+    model = InventoryEntry
+    form_class = InventoryEntryForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InventoryEntryCreate, self).dispatch(*args, **kwargs)
+
+
+class InventoryEntryUpdate(BaseUpdateView):
+
+    model = InventoryEntry
+    form_class = InventoryEntryForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InventoryEntryUpdate, self).dispatch(*args, **kwargs)
+
+
+class InventoryEntryDelete(DeleteView):
+    model = InventoryEntry
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('summaries:inventory_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InventoryEntryDelete, self).dispatch(*args, **kwargs)
