@@ -14,7 +14,22 @@ class PersonTable(tables.Table):
         'entities:person_detail',
         args=[A('pk')], verbose_name='Name'
     )
-    mentioned_in_entry = tables.ManyToManyColumn()
+    is_main_person = tables.TemplateColumn(
+        "{% for x in record.is_main_person.all %}{{ x }}|{% endfor %}",
+        orderable=False
+    )
+    num_of_main_pers = tables.TemplateColumn(
+        "{{record.is_main_person.count }}",
+        orderable=False
+    )
+    is_adm_person = tables.TemplateColumn(
+        "{% for x in record.is_adm_person.all %}{{ x }}|{% endfor %}",
+        orderable=False
+    )
+    num_of_adm_pers = tables.TemplateColumn(
+        "{{record.is_adm_person.count }}",
+        orderable=False
+    )
     profession = tables.ManyToManyColumn()
     merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
 

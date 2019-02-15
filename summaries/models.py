@@ -105,15 +105,25 @@ class InventoryEntry(IdProvider):
     )
     main_person = models.ManyToManyField(
         Person, blank=True,
-        verbose_name="Erwähnte Personen",
+        verbose_name="Name (Erklärung aus Verfachbuch)",
         help_text="Identifizierbare Personen, die im Eintrag erwähnt werden.",
         related_name="is_main_person"
+    )
+    main_person_nr = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Anzahl der Hauptpersonen",
+        help_text="Anzahl der Hauptpersonen"
     )
     adm_person = models.ManyToManyField(
         Person, blank=True,
         verbose_name="Beteiligte (administrative) Personen",
         help_text="Beteiligte Personen (Beamte, Gerichtsverpflichtete, Zeugen, ...).",
         related_name="is_adm_person"
+    )
+    adm_person_nr = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Anzahl beteiligte (administrative) Personen",
+        help_text="Anzahl der beteiligten Personen (Beamte, Gerichtsverpflichtete, Zeugen, ...)"
     )
     related_person = models.ManyToManyField(
         Person, blank=True,
@@ -122,11 +132,22 @@ class InventoryEntry(IdProvider):
         Verkäufer, Verpächter, Käufer, Pächter, ...).",
         related_name="is_related_person"
     )
+    related_person_nr = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Anzahl der beteiligten (nicht-administrative) Personen",
+        help_text="Anzal der beteiligten Personen (Erbsinteressenten, Gerhaben, Anweiser,\
+        Verkäufer, Verpächter, Käufer, Pächter, ...)."
+    )
     other_person = models.ManyToManyField(
         Person, blank=True,
-        verbose_name="Genannte Personen",
-        help_text="Genannte Personen.",
+        verbose_name="Sonstig genannte Personen",
+        help_text="Sonstig genannte Personen.",
         related_name="is_other_person"
+    )
+    other_person_nr = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Anzahl der sonstig genannten Personen",
+        help_text="Anzahl der sonstig genannten Personen"
     )
     barschaft = models.CharField(
         blank=True, null=True, max_length=250,
@@ -233,6 +254,13 @@ class InventoryEntry(IdProvider):
             return "{}".format(self.inv_signatur)
         else:
             return "{}".format(self.id)
+
+    def save(self, *args, **kwargs):
+        self.main_person_nr = self.main_person.all().count()
+        self.adm_person_nr = self.adm_person.all().count()
+        self.related_person_nr = self.related_person.all().count()
+        self.other_person_nr = self.other_person.all().count()
+        super().save(*args, **kwargs)
 
 
 class VfbEntry(IdProvider):

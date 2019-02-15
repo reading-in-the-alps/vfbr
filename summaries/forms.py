@@ -11,6 +11,20 @@ class InventoryEntryForm(forms.ModelForm):
     class Meta:
         model = InventoryEntry
         fields = "__all__"
+        widgets = {
+            'main_person': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:person-autocomplete'
+            ),
+            'adm_person': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:person-autocomplete'
+            ),
+            'related_person': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:person-autocomplete'
+            ),
+            'other_person': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:person-autocomplete'
+            ),
+        }
 
     def __init__(self, *args, **kwargs):
         super(InventoryEntryForm, self).__init__(*args, **kwargs)

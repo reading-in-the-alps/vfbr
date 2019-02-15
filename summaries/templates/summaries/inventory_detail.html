@@ -9,18 +9,38 @@
         <table class="table table-bordered table-hover">
             <tr>
                 <th>
-                    Typ
+                    {% get_verbose_name inventoryentry "inv_type" %}
                 </th>
                 <td>
-                    {{ object.adm_action_type }}
+                    {{ object.inv_type }}
                 </td>
             </tr>
             <tr>
                 <th>
-                    Verfachbuch
+                    {% get_verbose_name inventoryentry "vollstaendig" %}
+                </th>
+                <td>
+                    {{ object.vollstaendig }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {% get_verbose_name inventoryentry "is_located_in" %}
                 </th>
                 <td>
                     <a href="{{ object.is_located_in.get_absolute_url }}">{{ object.is_located_in }}</a>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {% get_verbose_name inventoryentry "main_person" %}
+                </th>
+                <td>
+                    {% for x in object.main_person.all %}
+                        <li>
+                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                        </li>
+                    {% endfor %}
                 </td>
             </tr>
             <tr>
