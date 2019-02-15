@@ -255,12 +255,12 @@ class InventoryEntry(IdProvider):
         else:
             return "{}".format(self.id)
 
-    def save(self, *args, **kwargs):
+    def save_stats(self, *args, **kwargs):
         self.main_person_nr = self.main_person.all().count()
         self.adm_person_nr = self.adm_person.all().count()
         self.related_person_nr = self.related_person.all().count()
         self.other_person_nr = self.other_person.all().count()
-        super().save(*args, **kwargs)
+        self.save()
 
 
 class VfbEntry(IdProvider):
