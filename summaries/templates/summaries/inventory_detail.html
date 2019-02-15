@@ -17,14 +17,6 @@
             </tr>
             <tr>
                 <th>
-                    Vollregest
-                </th>
-                <td>
-                    {{ object.table_row }}
-                </td>
-            </tr>
-            <tr>
-                <th>
                     Verfachbuch
                 </th>
                 <td>
@@ -67,6 +59,21 @@
                     {% endfor %}
                 </td>
             </tr>
+        </table>
+        <legend>
+            Origanl Datensatz
+        </legend>
+        <table class="table table-bordered table-hover">
+            {% for key, value in orig_data.items %}
+                <tr>
+                    <th>
+                        {{ key }}
+                    </th>
+                    <td>
+                        {{ value }}
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
         {% if object.annotations %}
             <legend>Annotationen</legend>

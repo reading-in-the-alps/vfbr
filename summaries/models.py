@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.postgres.fields import JSONField
 
 from idprovider.models import IdProvider
 from entities.models import Institution, Person, Place
@@ -99,8 +100,8 @@ class InventoryEntry(IdProvider):
         help_text="Welche Art von Inventar wurde in diesem Eintrag protokolliert",
         on_delete=models.SET_NULL
     )
-    table_row = models.TextField(
-        blank=True, verbose_name="Excel-Sheet Eintrag", help_text="Excel-Sheet Eintrag"
+    excel_row = JSONField(
+        null=True, blank=True, verbose_name="Original Erfassung", help_text="Excel-Sheet Eintrag"
     )
     main_person = models.ManyToManyField(
         Person, blank=True,

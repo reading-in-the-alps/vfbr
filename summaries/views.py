@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -141,6 +142,11 @@ class InventoryEntryListView(GenericListView):
 class InventoryEntryDetailView(DetailView):
     model = InventoryEntry
     template_name = 'summaries/inventory_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(InventoryEntryDetailView, self).get_context_data()
+        context['orig_data'] = json.loads(self.object.excel_row)
+        return context
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
