@@ -130,9 +130,7 @@ class InventoryEntryListView(GenericListView):
     table_class = InventoryEntryTable
     init_columns = [
         'id',
-        'located_in',
-        'adm_action_type',
-        'inventory',
+        'inv_signatur',
     ]
 
     @method_decorator(login_required)

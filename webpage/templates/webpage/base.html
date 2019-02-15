@@ -58,7 +58,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white box-shadow">
             <a class="navbar-brand" href="/">
-                {% projects_metadata 'title' %}
+                <img src="{% static 'webpage/img/project_logo.png' %}" alt="Rita" title="Reading in the Alps, logo (c) by Sandra Lehecka"/>
             </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -190,13 +190,25 @@
                     <i class="far fa-comment"></i> CONTACT
                 </div>
                 <div class="row">
-                    <div class="col-md-2 pl-0">
+                    <div class="col-md-3">
                         <a href="https://www.oeaw.ac.at/acdh/acdh-home/" target="_blank" rel="noopener" aria-label="ACDH">
                             <img src="{% static 'webpage/img/acdh_logo.png' %}" alt="ACDH" title="Austrian Centre for Digital Humanities"/>
                         </a>
                     </div>
-                    <div class="col-md-2 ml-auto">
-                        <img src="{% static 'webpage/img/partner_logo.png' %}" alt="Partner Logo" title="Partner Logo"/>
+                    <div class="col-md-3">
+                        <a href="https://pf.fwf.ac.at/de/wissenschaft-konkret/project-finder?search[what]=P+29329" target="_blank" rel="noopener" aria-label="FWF P 29329">
+                            <img src="{% static 'webpage/img/fwf.gif' %}" alt="FWF" title="FWF funded Project P 29329"/>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="https://www.tirol.gv.at/bildung/tiroler-wissenschaftsfoerderung/" target="_blank" rel="noopener" aria-label="Tiroler Wissenschaftförderung">
+                            <img src="{% static 'webpage/img/twf_logo.png' %}" alt="TWF" title="Tiroler Wissenschaftförderung"/>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="https://www.uibk.ac.at/" target="_blank" rel="noopener" aria-label="UIBK">
+                            <img src="{% static 'webpage/img/uibklogo.png' %}" alt="UIBK" title="University of Innsbruck"/>
+                        </a>
                     </div>
                 </div>
             </div>

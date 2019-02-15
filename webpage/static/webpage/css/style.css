@@ -4,8 +4,14 @@
 }
 
 a {
-    color: #88dbdf;
+    color: #bd0000;
 }
+
+a:not([href]):not([tabindex]) {
+    color: #bd0000;
+    text-decoration: none;
+}
+
 .help-block {
 	font-size: 0.9em;
 }

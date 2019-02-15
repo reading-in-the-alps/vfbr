@@ -33,9 +33,15 @@ class InventoryEntryFilterFormHelper(FormHelper):
         self.layout = Layout(
             Accordion(
                 AccordionGroup(
-                    'Basic search options',
+                    'Suche in Signatur',
                     'inv_signatur',
+                    'is_located_in__signatur',
                     css_id="basic_search_fields"
+                    ),
+                AccordionGroup(
+                    'Suche im Inhalt',
+                    'table_row',
+                    css_id="inhalt_search_fields"
                     ),
                 )
             )
