@@ -15,19 +15,23 @@ class PersonTable(tables.Table):
         args=[A('pk')], verbose_name='Name'
     )
     is_main_person = tables.TemplateColumn(
-        "{% for x in record.is_main_person.all %}<a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
+        "{% for x in record.is_main_person.all %}\
+        <a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
         orderable=False
     )
     is_adm_person = tables.TemplateColumn(
-        "{% for x in record.is_adm_person.all %}<a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
+        "{% for x in record.is_adm_person.all %}\
+        <a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
         orderable=False
     )
     is_related_person = tables.TemplateColumn(
-        "{% for x in record.is_related_person.all %}<a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
+        "{% for x in record.is_related_person.all %}\
+        <a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
         orderable=False
     )
     is_other_person = tables.TemplateColumn(
-        "{% for x in record.is_other_person.all %}<a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
+        "{% for x in record.is_other_person.all %}\
+        <a href='{{ x.get_absolute_url }}'>{{ x }} </a>|{% endfor %}",
         orderable=False
     )
     profession = tables.ManyToManyColumn()
