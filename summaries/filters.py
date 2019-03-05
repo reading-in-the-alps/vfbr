@@ -9,19 +9,6 @@ from entities.models import Institution
 from . models import *
 
 
-class InventoryEntryListFilter(django_filters.FilterSet):
-    inv_signatur = django_filters.CharFilter(
-        lookup_expr='icontains',
-        help_text=InventoryEntry._meta.get_field('inv_signatur').help_text,
-        label=InventoryEntry._meta.get_field('inv_signatur').verbose_name
-    )
-    is_located_in__signatur = django_filters.CharFilter(
-        lookup_expr='icontains',
-        help_text=InventoryEntry._meta.get_field('is_located_in').help_text,
-        label=InventoryEntry._meta.get_field('is_located_in').verbose_name
-    )
-
-
 class VfbEntryListFilter(django_filters.FilterSet):
     entry_signatur = django_filters.CharFilter(
         lookup_expr='icontains',
