@@ -19,7 +19,7 @@ class PersonListView(GenericListView):
     table_class = PersonTable
     init_columns = [
         'id',
-        'name',
+        'written_name',
     ]
     enable_merge = True
 

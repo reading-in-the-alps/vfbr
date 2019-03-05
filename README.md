@@ -11,25 +11,38 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 
 ## enrich workflow
 
+### extract Persons
+
+* annotate 'Person' using generose annotation rules.
+* train a model 'data/extract_persons'
+* use this model to create NerSamples
+* iterate over NerSamples (providing 'generose Person objects') and store Person objects (don't use get or create but a person object for each detected entitiy).
+* in theory each Person entity should be linked to the according VfbEntry, but this is not the case. The reason is in this lines
+```
+    ner, _ = NerSample.objects.get_or_create(text=y[0])
+    ...
+    ner.content_object = x
+```
+So better skip the step of creating NerSamples.
+
+# reduce dublicates
+
+compare each Person.written_name wich each other and check the similarity
+```python
+import itertools
+from difflib import SequenceMatcher
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
+persons = Person.objects.all()
+for a, b in itertools.combinations(persons, 2):
+    score = similar(a.written_name, b.written_name)
+    if score > 0.7 and score < 1:
+        print(score, a, b)
+```
 
 ### create trainingsdata by annotating NerSamples
-*  http://127.0.0.1:8000/annotations/nersamples/todo
-* dump checked samples `python manage.py dump_checked_samples`
 
 ### use trainingsdata to train a model
-* copy dumped samples to `spacyapp/data` e.g. `spacyapp/data/vfbr_jobs.csv`
-* configure `spacyapp/train.py`
-
-```python
-def main(
-    model=None,
-    output_dir="data/vfbr_jobs_blank_560_100",
-    n_iter=100,
-    train_data="data/vfbr_jobs.csv",
-    n_samples=560,
-    new_label="OBJECT"
-):
-```
 
 ### use this model to create new NerSamples
 

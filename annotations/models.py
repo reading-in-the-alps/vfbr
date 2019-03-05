@@ -111,7 +111,8 @@ class NerSample(models.Model):
                     "ent": x[2]
                 }
                 sl = text[x[0]:x[1]]
-                markup = tag.format(TAG_COLORS[x[2]], sl, x[2])
+                color = TAG_COLORS.get(x[2], '#5a6268')
+                markup = tag.format(color, sl, x[2])
                 start = text[:x[0]]
                 end = text[x[1]:]
                 an_dict["annotated"] = "".join([start, markup, end])
