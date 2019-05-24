@@ -170,5 +170,29 @@
             </div>
         </div>
     </div>
+    {% if user.is_authenticated %}
+        <h3>Zeige potentielle Duplikate</h3>
+        <form action="./{{ object.id }}" method="GET">
+            Levenshtein Distanz: <input type="leven" name="leven" min="1" max="100">
+          <input type="submit">
+        </form>
+        <div>
+            <legend>
+                Potentielle Dublikate von: {{ object.written_name_leven }}
+            </legend>
+            <form action="{% url 'browsing:merge_objects' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="model_name" value="person"/>
+                <input type="hidden" name="app_name" value="entities"/>
+                {% for x in similar %}
+                    <li>
+                        <input type="checkbox" name="keep" value="{{ x.id }}" title="keep this"/> |
+                        <input type="checkbox" name="remove" value="{{ x.id }}" title="remove this"/>
+                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>  (id: {{x.id }})
+                    </li>
+                {% endfor %}
+            <input type="submit" value="merge" />
+        </div>
+    {% endif %}
 
 {% endblock custom %}

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.utils.decorators import method_decorator
 from django.urls import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
@@ -10,6 +11,7 @@ from . filters import *
 from . forms import *
 from . tables import *
 from . models import Person, Place, Institution
+from . utils import Levenshtein
 
 
 class PersonListView(GenericListView):
@@ -27,6 +29,24 @@ class PersonListView(GenericListView):
 class PersonDetailView(DetailView):
     model = Person
     template_name = 'entities/person_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            leven = int(self.request.GET.get('leven', 0))
+        except ValueError:
+            leven = 0
+        if leven > 0 and leven < 100:
+            similar = self.model.objects.annotate(
+                lev_dist=Levenshtein(
+                    F('written_name_leven'), self.object.written_name_leven)
+                ).filter(
+                    lev_dist__lte=leven
+                )
+            context['similar'] = similar
+            context['leven'] = leven
+
+        return context
 
 
 class PersonCreate(BaseCreateView):

@@ -1,5 +1,18 @@
+from django.db.models import Func
 from rdflib import Graph, Namespace
 from rdflib.term import URIRef
+
+
+class Levenshtein(Func):
+    template = "%(function)s(%(expressions)s, '%(search_term)s')"
+    function = "levenshtein"
+
+    def __init__(self, expression, search_term, **extras):
+        super(Levenshtein, self).__init__(
+            expression,
+            search_term=search_term,
+            **extras
+        )
 
 
 def get_coordinates(gnd_id):

@@ -204,6 +204,7 @@ class Institution(IdProvider):
 class Person(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
     written_name = models.CharField(max_length=300, blank=True)
+    written_name_leven = models.CharField(max_length=254, blank=True)
     forename = models.CharField(max_length=300, blank=True)
     name = models.CharField(max_length=300, blank=True)
     house_name = models.CharField(max_length=300, blank=True)
