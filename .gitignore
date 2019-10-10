@@ -37,3 +37,6 @@ dev_secret.py
 /arche/data/fileType.json
 /arche/data/fileList.json
 /vfbr/settings/pg_local.py
+
+/transkribus
+*.csv

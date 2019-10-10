@@ -22,7 +22,20 @@ class VerfachBuch(IdProvider):
     year = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True,
         verbose_name="Jahr",
-        help_text="Verfachbuch des Jahres JJJJ"
+        help_text="Verfachbuch des Jahres JJJJ,\
+        bei mehreren Jahren wird das frühste Jahr angegeben"
+    )
+    year_latest = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True,
+        verbose_name="Jahr",
+        help_text="Verfachbuch des Jahres JJJJ,\
+        bei mehreren Jahren wird das späteste Jahr angegeben"
+    )
+    year_label = models.CharField(
+        blank=True, null=True,
+        max_length=250,
+        verbose_name="Jahr(e)",
+        help_text="Alle Jahre die das Verfachbuch umfasst"
     )
 
     @classmethod
@@ -78,6 +91,16 @@ class VfbEntry(IdProvider):
         verbose_name="Art der Amtshandlung",
         help_text="Welche Art von Amtshandlung wurde in diesem Eintrag protokolliert",
         on_delete=models.SET_NULL
+    )
+    start_page = models.IntegerField(
+        blank=True, null=True,
+        verbose_name='Blattnummer Eintragsbeginn',
+        help_text="Wird zur Sortierung und zur Berechnung des Umfanges des Eintrages verwendet"
+    )
+    end_page = models.IntegerField(
+        blank=True, null=True,
+        verbose_name='Blattnummer Eintragsbeginn',
+        help_text="Wird zur Sortierung und zur Berechnung des Umfanges des Eintrages verwendet"
     )
     vollregest = models.TextField(
         blank=True, verbose_name="Regest", help_text="Text des Regests"
@@ -143,3 +166,24 @@ class VfbEntry(IdProvider):
             return "{}".format(self.entry_signatur)
         else:
             return "{}".format(self.id)
+
+
+class Anmerkungen(IdProvider):
+    text = models.TextField(
+        blank=True, null=True,
+        verbose_name="Anmerkung",
+        help_text="Anmerkung"
+    )
+    public = models.BooleanField(
+        default=False,
+        verbose_name="öffentlich",
+        help_text="Soll diese Anmerkung öffentlich Einsehbar sein?"
+    )
+    entry = models.ForeignKey(
+        VfbEntry,
+        blank=True, null=True,
+        on_delete=models.CASCADE,
+        verbose_name="Anmerkung zu Eintrag",
+        help_text="Anmerkung/Kommentar zu Eintrag",
+        related_name="has_notes"
+    )
