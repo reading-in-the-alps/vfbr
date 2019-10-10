@@ -46,3 +46,11 @@ class VerfachBuchListFilter(django_filters.FilterSet):
         help_text=VerfachBuch._meta.get_field('year').help_text,
         label=VerfachBuch._meta.get_field('year').verbose_name
     )
+
+
+class AnmerkungenListFilter(django_filters.FilterSet):
+    text = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Anmerkungen._meta.get_field('text').help_text,
+        label=Anmerkungen._meta.get_field('text').verbose_name
+    )

@@ -122,3 +122,57 @@ class VerfachBuchDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(VerfachBuchDelete, self).dispatch(*args, **kwargs)
+
+
+class AnmerkungenListView(GenericListView):
+    model = Anmerkungen
+    filter_class = AnmerkungenListFilter
+    formhelper_class = AnmerkungenFilterFormHelper
+    table_class = AnmerkungenTable
+    init_columns = [
+        'id',
+        'text',
+    ]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AnmerkungenListView, self).dispatch(*args, **kwargs)
+
+
+class AnmerkungenDetailView(DetailView):
+    model = Anmerkungen
+    template_name = 'summaries/anmerkungen_detail.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AnmerkungenDetailView, self).dispatch(*args, **kwargs)
+
+
+class AnmerkungenCreate(BaseCreateView):
+
+    model = Anmerkungen
+    form_class = AnmerkungenForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AnmerkungenCreate, self).dispatch(*args, **kwargs)
+
+
+class AnmerkungenUpdate(BaseUpdateView):
+
+    model = Anmerkungen
+    form_class = AnmerkungenForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AnmerkungenUpdate, self).dispatch(*args, **kwargs)
+
+
+class AnmerkungenDelete(DeleteView):
+    model = Anmerkungen
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('summaries:anmerkungen_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AnmerkungenDelete, self).dispatch(*args, **kwargs)

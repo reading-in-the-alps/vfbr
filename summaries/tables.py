@@ -47,3 +47,15 @@ class VerfachBuchTable(tables.Table):
         model = VerfachBuch
         sequence = ('id', 'title',)
         attrs = {"class": "table table-responsive table-hover"}
+
+
+class AnmerkungenTable(tables.Table):
+    id = tables.LinkColumn(
+        'summaries:anmerkung_detail',
+        args=[A('pk')], verbose_name='ID'
+    )
+
+    class Meta:
+        model = Anmerkungen
+        sequence = ('id', 'text',)
+        attrs = {"class": "table table-responsive table-hover"}

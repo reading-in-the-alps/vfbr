@@ -53,4 +53,28 @@ urlpatterns = [
         views.VfbEntryDelete.as_view(),
         name='verfachbucheintrag_delete'
     ),
+    url(
+        r'^anmerkungen/$',
+        views.AnmerkungenListView.as_view(),
+        name='anmerkungen_browse'
+    ),
+    url(
+        r'^anmerkungen/detail/(?P<pk>[0-9]+)$',
+        views.AnmerkungenDetailView.as_view(),
+        name='anmerkung_detail'
+    ),
+    url(
+        r'^anmerkungen/create/$',
+        views.AnmerkungenCreate.as_view(),
+        name='anmerkung_create'
+    ),
+    url(
+        r'^anmerkungen/edit/(?P<pk>[0-9]+)$',
+        views.AnmerkungenUpdate.as_view(),
+        name='anmerkung_edit'
+    ),
+    url(
+        r'^anmerkungen/delete/(?P<pk>[0-9]+)$',
+        views.AnmerkungenDelete.as_view(),
+        name='anmerkung_delete'),
 ]
