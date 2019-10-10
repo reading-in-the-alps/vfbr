@@ -98,26 +98,6 @@
 
                                     {% endfor %}
 
-                                    {% if user.is_authenticated %}
-                                        <div class="dropdown-divider"></div>
-                                        <!-- {% nav_menu app='arche' as links %}
-                                        {% for x in links %}
-
-                                                <a class="dropdown-item" href="{{ x.link}}">{{ x.name }}</a>
-
-                                        {% endfor %} -->
-                                        {% if 'bib' in apps %}
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{% url 'bib:synczotero' %}">Import new Items from Zotero</a>
-                                        {% endif %}
-                                        <a class="dropdown-item" href="{% url 'annotations:browse_nersamples_todo' %}">please check me!</a>
-                                        {% nav_menu app='annotations' as links %}
-                                        {% for x in links %}
-
-                                                <a class="dropdown-item" href="{{ x.link}}">{{ x.name }}</a>
-
-                                        {% endfor %}
-                                    {% endif %}
                                 </div>
                             </li>
                     {% if 'sparql' in APPS %}
@@ -221,14 +201,6 @@
                     {% if DB_NAME %}
                         <div class="footer-imprint-bar">
                             <small>{{ DB_NAME }}</small>
-                        </div>
-                        <div>
-                            <small>
-                                all: {{ nr_all }}<br />
-                                checked: {{ nr_checked }} <br />
-                                cohen_kappa_score: {{ cks_str }}
-                                fscore: {{ f1_str.2 }}
-                            </small>
                         </div>
                     {% endif %}
                 {% endif %}
