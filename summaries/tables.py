@@ -10,20 +10,13 @@ class VfbEntryTable(tables.Table):
         'summaries:verfachbucheintrag_detail',
         args=[A('pk')], verbose_name='ID'
     )
-    title = tables.LinkColumn(
-        'summaries:verfachbucheintrag_detail',
-        args=[A('pk')], verbose_name='Titel'
-    )
     mentioned_person = tables.ManyToManyColumn()
     mentioned_inst = tables.ManyToManyColumn()
     mentioned_place = tables.ManyToManyColumn()
-    creator_person = tables.ManyToManyColumn()
-    creator_inst = tables.ManyToManyColumn()
-    forename = tables.Column()
 
     class Meta:
         model = VfbEntry
-        sequence = ('id', 'title',)
+        sequence = ('id',)
         attrs = {"class": "table table-responsive table-hover"}
 
 

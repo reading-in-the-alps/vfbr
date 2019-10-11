@@ -12,7 +12,7 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 ## enrich workflow
 
 
-`python -m prodigy ner.make-gold drf de_core_news_sm http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --label ADM-TYPE -U`
+`python -m prodigy ner.make-gold drf vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --label ADM-TYPE -U`
 
 # train custom word vectors
 
@@ -29,5 +29,5 @@ useless?
 `python -m prodigy ner.batch-train vfbr --output vfrb_vecs vfbr_adm_model --no-missing`
 
 ## teach
-s
-python -m prodigy ner.teach vfbr_quick vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf  -U
+
+`python -m prodigy ner.teach vfbr_quick vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf  -U`
