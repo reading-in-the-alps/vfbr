@@ -20,7 +20,7 @@
                     Typ
                 </th>
                 <td>
-                    {{ object.adm_action_type }}
+                    <a href="{{ object.adm_action_type.get_absolute_url }}">{{ object.adm_action_type }}</a>
                 </td>
             </tr>
             <tr>
@@ -29,6 +29,14 @@
                 </th>
                 <td>
                     <a href="{{ object.located_in.get_absolute_url }}">{{ object.located_in }}</a>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Inventar
+                </th>
+                <td>
+                    {{ object.inventory }}
                 </td>
             </tr>
             <tr>

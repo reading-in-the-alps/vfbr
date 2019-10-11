@@ -21,13 +21,13 @@ class VfbEntryListFilter(django_filters.FilterSet):
     )
     adm_action_type = django_filters.ModelMultipleChoiceFilter(
         queryset=SkosConcept.objects.filter(
-            collection__name__icontains="adm-action-type"
+            collection__name__icontains="adm_type"
         ),
         help_text=VfbEntry._meta.get_field('adm_action_type').help_text,
         label=VfbEntry._meta.get_field('adm_action_type').verbose_name,
         method=generous_concept_filter,
         widget=autocomplete.Select2Multiple(
-            url="/vocabs-ac/concept-by-colleciton-ac/adm-action-type",
+            url="/vocabs-ac/concept-by-colleciton-ac/adm_type",
             attrs={
                 'data-placeholder': 'Autocomplete ...',
                 'data-minimum-input-length': 0,
