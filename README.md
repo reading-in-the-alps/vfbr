@@ -3,39 +3,31 @@
 A [djangobaseproject](https://github.com/acdh-oeaw/djangobaseproject) based web application to publish summaries of Verfachbücher from
 
 * Stadtgericht Bruneck
+* Oberamtsgericht Bruneck
 * Landgericht St. Michaelsburg
-* a third one to come
 
 for the years 1750-1800 created by Michael Prokosch and Michael Span in the context of the FWF-funded project Reading in the Alps.
 
 
 ## enrich workflow
 
-### extract Persons
 
-* annotate 'Person' using generose annotation rules.
-* train a model 'data/extract_persons'
-* use this model to create NerSamples
-* iterate over NerSamples (providing 'generose Person objects') and store Person objects (don't use get or create but a person object for each detected entitiy).
-* in theory each Person entity should be linked to the according VfbEntry, but this is not the case. The reason is in this lines
-```
-    ner, _ = NerSample.objects.get_or_create(text=y[0])
-    ...
-    ner.content_object = x
-```
-So better skip the step of creating NerSamples.
+`python -m prodigy ner.make-gold drf de_core_news_sm http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --label ADM-TYPE -U`
 
-# reduce dublicates
+# train custom word vectors
 
-compare each Person.written_name wich each other and check the similarity
-```python
-import itertools
-from difflib import SequenceMatcher
-def similar(a, b):
-    return SequenceMatcher(None, a, b).ratio()
-persons = Person.objects.all()
-for a, b in itertools.combinations(persons, 2):
-    score = similar(a.written_name, b.written_name)
-    if score > 0.7 and score < 1:
-        print(score, a, b)
-```
+`python -m prodigy terms.train-vectors vfrb_vecs http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --lang de`
+
+## teach terms
+
+`python -m prodigy terms.teach drf vfrb_vecs --seeds seeds.txt `
+
+useless?
+
+## train
+
+`python -m prodigy ner.batch-train vfbr --output vfrb_vecs vfbr_adm_model --no-missing`
+
+## teach
+s
+python -m prodigy ner.teach vfbr_quick vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf  -U

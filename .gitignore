@@ -40,3 +40,6 @@ dev_secret.py
 
 /transkribus
 *.csv
+prodigy*
+vfbr_*
+*.txt

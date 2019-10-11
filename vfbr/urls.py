@@ -4,6 +4,7 @@ from django.conf import settings
 from rest_framework import routers
 from entities.apis_views import PlaceViewSet, GeoJsonViewSet
 from vocabs import api_views
+from summaries.api_views import *
 
 
 router = routers.DefaultRouter()
@@ -14,7 +15,10 @@ router.register(r'skosnamespaces', api_views.SkosNamespaceViewSet)
 router.register(r'skosconceptschemes', api_views.SkosConceptSchemeViewSet)
 router.register(r'skoscollections', api_views.SkosCollectionViewSet)
 router.register(r'skosconcepts', api_views.SkosConceptViewSet)
-router.register(r'places', PlaceViewSet)
+router.register(r'vfb', VerfachBuchViewSet)
+router.register(r'vfb-entry', VfbEntryViewSet)
+router.register(r'anmerkungen', AnmerkungenViewSet)
+
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
