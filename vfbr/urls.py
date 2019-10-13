@@ -2,7 +2,7 @@ from django.conf.urls import url, include, handler404
 from django.contrib import admin
 from django.conf import settings
 from rest_framework import routers
-from entities.apis_views import PlaceViewSet, GeoJsonViewSet
+from entities.api_views import *
 from vocabs import api_views
 from summaries.api_views import *
 
@@ -17,6 +17,8 @@ router.register(r'skoscollections', api_views.SkosCollectionViewSet)
 router.register(r'skosconcepts', api_views.SkosConceptViewSet)
 router.register(r'vfb', VerfachBuchViewSet)
 router.register(r'vfb-entry', VfbEntryViewSet)
+router.register(r'persons', PersonViewSet)
+router.register(r'institutions', InstitutionViewSet)
 router.register(r'anmerkungen', AnmerkungenViewSet)
 
 

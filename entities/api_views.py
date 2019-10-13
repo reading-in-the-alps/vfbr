@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import PlaceSerializer, AlternativeNameSerializer, GeoJsonSerializer
-from .models import Place, AlternativeName
-from .api_renderers import GeoJsonRenderer
+from . serializers import *
+from . models import Place, AlternativeName, Person, Institution
+from . api_renderers import GeoJsonRenderer
 from rest_framework.settings import api_settings
 
 
@@ -25,3 +25,13 @@ class GeoJsonViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (GeoJsonRenderer,)
+
+
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+
+
+class InstitutionViewSet(viewsets.ModelViewSet):
+    queryset = Institution.objects.all()
+    serializer_class = InstitutionSerializer

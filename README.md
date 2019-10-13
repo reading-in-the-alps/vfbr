@@ -9,14 +9,20 @@ A [djangobaseproject](https://github.com/acdh-oeaw/djangobaseproject) based web 
 for the years 1750-1800 created by Michael Prokosch and Michael Span in the context of the FWF-funded project Reading in the Alps.
 
 
-## enrich workflow
+# enrich workflow
 
+## train custom word vectors
 
-`python -m prodigy ner.make-gold drf vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --label ADM-TYPE -U`
+`python -m prodigy terms.train-vectors vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json&offset=::vollregest::10" --loader from_drf --lang de`
 
-# train custom word vectors
+### adm_types
 
-`python -m prodigy terms.train-vectors vfrb_vecs http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --lang de`
+`python -m prodigy ner.make-gold vfbr vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf --label ADM-TYPE -U`
+
+### vfbr_pers
+
+`python -m prodigy ner.make-gold vfbr_persons vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10" --loader from_drf --label PERS -U`
+
 
 ## teach terms
 
