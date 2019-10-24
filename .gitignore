@@ -45,3 +45,5 @@ vfbr_*
 *.txt
 local.py
 !requirements.txt
+
+charts
