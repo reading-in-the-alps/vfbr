@@ -13,7 +13,7 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 
 ## train custom word vectors
 
-`python -m prodigy terms.train-vectors vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json&offset=::vollregest::10" --loader from_drf --lang de`
+`python -m prodigy terms.train-vectors vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10" --loader from_drf --lang de`
 
 ### adm_types
 
@@ -23,6 +23,7 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 
 `python -m prodigy ner.make-gold vfbr_persons vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10" --loader from_drf --label PERS -U`
 
+`python -m prodigy ner.make-gold vfbr_persons vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10" --loader from_drf --label PERS -U`
 
 ## teach terms
 
@@ -32,7 +33,7 @@ useless?
 
 ## train
 
-`python -m prodigy ner.batch-train vfbr --output vfrb_vecs vfbr_adm_model --no-missing`
+`python -m prodigy ner.batch-train vfbr_persons vfbr_vecs --output vfbr_persons_model -U --no-missing`
 
 ## teach
 

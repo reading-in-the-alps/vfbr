@@ -1,5 +1,5 @@
 import django_filters
-
+from django_filters.rest_framework import FilterSet
 from dal import autocomplete
 from django import forms
 
@@ -9,11 +9,16 @@ from entities.models import Institution
 from . models import *
 
 
-class VfbEntryListFilter(django_filters.FilterSet):
+class VfbEntryListFilter(FilterSet):
     entry_signatur = django_filters.CharFilter(
         lookup_expr='icontains',
         help_text=VfbEntry._meta.get_field('entry_signatur').help_text,
         label=VfbEntry._meta.get_field('entry_signatur').verbose_name
+    )
+    vollregest = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=VfbEntry._meta.get_field('vollregest').help_text,
+        label=VfbEntry._meta.get_field('vollregest').verbose_name
     )
     located_in__year = django_filters.DateFromToRangeFilter(
         help_text=VerfachBuch._meta.get_field('year').help_text,

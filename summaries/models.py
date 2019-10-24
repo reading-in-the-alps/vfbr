@@ -6,8 +6,10 @@ from idprovider.models import IdProvider
 from entities.models import Institution, Person, Place
 from vocabs.models import SkosConcept
 
+from transkribus.models import TrpBaseModel
 
-class VerfachBuch(IdProvider):
+
+class VerfachBuch(IdProvider, TrpBaseModel):
     """ Beschreibt die Archivalie 'Verfachbuch' """
     signatur = models.CharField(
         max_length=250, blank=True, help_text="Vollzitat des Verfachbuches",
