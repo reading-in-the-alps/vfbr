@@ -3,7 +3,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from idprovider.models import IdProvider
-import reversion
 
 from browsing.browsing_utils import model_to_dict
 from vocabs.models import SkosConcept
@@ -11,7 +10,6 @@ from vocabs.models import SkosConcept
 from . utils import get_coordinates
 
 
-@reversion.register()
 class AlternativeName(IdProvider):
     name = models.CharField(
         max_length=250, blank=True, help_text="Alternative Name"
@@ -33,7 +31,6 @@ class AlternativeName(IdProvider):
         return "{}".format(self.name)
 
 
-@reversion.register()
 class Place(IdProvider):
     PLACE_TYPES = (
         ("city", "city"),
@@ -137,7 +134,6 @@ class Place(IdProvider):
         return "{}".format(self.name)
 
 
-@reversion.register()
 class Institution(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
     written_name = models.CharField(max_length=300, blank=True)
@@ -200,7 +196,6 @@ class Institution(IdProvider):
         return "{}".format(self.written_name)
 
 
-@reversion.register()
 class Person(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
     written_name = models.CharField(max_length=300, blank=True)
