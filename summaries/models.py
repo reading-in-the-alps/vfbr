@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.postgres.fields import JSONField
 
 from idprovider.models import IdProvider
 from entities.models import Institution, Person, Place
