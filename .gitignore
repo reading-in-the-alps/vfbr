@@ -44,3 +44,4 @@ prodigy*
 vfbr_*
 *.txt
 local.py
+!requirements.txt
