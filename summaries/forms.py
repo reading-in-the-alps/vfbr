@@ -12,6 +12,15 @@ class VfbEntryForm(forms.ModelForm):
         model = VfbEntry
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super(VfbEntryForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
 
 class VfbEntryFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
@@ -39,6 +48,15 @@ class VerfachBuchForm(forms.ModelForm):
         model = VerfachBuch
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super(VerfachBuchForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
 
 class VerfachBuchFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
@@ -64,6 +82,15 @@ class AnmerkungenForm(forms.ModelForm):
     class Meta:
         model = Anmerkungen
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(AnmerkungenForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
 
 
 class AnmerkungenFilterFormHelper(FormHelper):
