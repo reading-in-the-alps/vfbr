@@ -46,4 +46,4 @@ vfbr_*
 local.py
 !requirements.txt
 
-charts
+/myenv

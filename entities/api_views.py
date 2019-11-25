@@ -1,8 +1,11 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+
 from . serializers import *
 from . models import Place, AlternativeName, Person, Institution
 from . api_renderers import GeoJsonRenderer
+from entities.filters import PersonListFilter
 from rest_framework.settings import api_settings
 
 
@@ -30,6 +33,12 @@ class GeoJsonViewSet(viewsets.ViewSet):
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    filterset_class = PersonListFilter
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = [
+        'name', 'forename', 'legacy_id'
+    ]
+
 
 
 class InstitutionViewSet(viewsets.ModelViewSet):

@@ -25,6 +25,12 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 
 `python -m prodigy ner.make-gold vfbr_persons vfbr_vecs "http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10" --loader from_drf --label PERS -U`
 
+### vfbr_place
+
+`python -m prodigy ner.make-gold vfbr_places vfbr_vecs "http://127.0.0.1:8000/api/persons/?format=json::legacy_id::10" --loader from_drf --label PLACE -U`
+
+`python -m prodigy ner.make-gold vfbr_places vfbr_places_model "http://127.0.0.1:8000/api/persons/?format=json::legacy_id::10" --loader from_drf --label PLACE -U`
+
 ## teach terms
 
 `python -m prodigy terms.teach drf vfrb_vecs --seeds seeds.txt `
@@ -34,6 +40,9 @@ useless?
 ## train
 
 `python -m prodigy ner.batch-train vfbr_persons vfbr_vecs --output vfbr_persons_model -U --no-missing`
+
+`python -m prodigy ner.batch-train vfbr_places vfbr_vecs --output vfbr_places_model -U --no-missing`
+
 
 ## teach
 
