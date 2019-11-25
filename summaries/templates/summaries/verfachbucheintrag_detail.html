@@ -2,90 +2,117 @@
 {% load staticfiles %}
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
+{% block scriptHeader %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/three@latest/build/three.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
+  <script src="{% static 'netvis/js/netvis.js' %}"></script>
+{% endblock %}
+
 {% block custom %}
-<div class="card">
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
 
-    <div class="card-body">
-        <table class="table table-bordered table-hover">
-            <tr>
-                <th>
-                    Vollregest
-                </th>
-                <td>
-                    {{ object.vollregest}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Typ
-                </th>
-                <td>
-                    <a href="{{ object.adm_action_type.get_absolute_url }}">{{ object.adm_action_type }}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Verfachbuch
-                </th>
-                <td>
-                    <a href="{{ object.located_in.get_absolute_url }}">{{ object.located_in }}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Inventar
-                </th>
-                <td>
-                    {{ object.inventory }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Erwähnte Personen
-                </th>
-                <td>
-                    {% for x in object.mentioned_person.all %}
-                        <li>
-                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                        </li>
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
-        {% if object.annotations %}
-            <legend>Annotationen</legend>
+        <div class="card-body">
             <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Maschine
-                        </th>
-                        <th>
-                            Mensch
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for x in object.annotations.all %}
-                        <tr>
-                            <td>
-                                <a href="{{ x.get_absolute_url }}">entities</a>
-                            </td>
-                            <td>
-                                {{ x.entity_json|safe }}
-                            </td>
-                            <td>
-                                {{ x.entity_checked|safe }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-
+                <tr>
+                    <th>
+                        Vollregest
+                    </th>
+                    <td>
+                        {{ object.vollregest}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Typ
+                    </th>
+                    <td>
+                        <a href="{{ object.adm_action_type.get_absolute_url }}">{{ object.adm_action_type }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Verfachbuch
+                    </th>
+                    <td>
+                        <a href="{{ object.located_in.get_absolute_url }}">{{ object.located_in }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Inventar
+                    </th>
+                    <td>
+                        {{ object.inventory }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Erwähnte Personen
+                    </th>
+                    <td>
+                        {% for x in object.mentioned_person.all %}
+                            <li>
+                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                            </li>
+                        {% endfor %}
+                    </td>
+                </tr>
             </table>
-        {% endif %}
+            {% if object.annotations %}
+                <legend>Annotationen</legend>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Maschine
+                            </th>
+                            <th>
+                                Mensch
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in object.annotations.all %}
+                            <tr>
+                                <td>
+                                    <a href="{{ x.get_absolute_url }}">entities</a>
+                                </td>
+                                <td>
+                                    {{ x.entity_json|safe }}
+                                </td>
+                                <td>
+                                    {{ x.entity_checked|safe }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            {% endif %}
+        </div>
     </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Beziehungen als Netzwerk</h4>
+        </div>
+        <div class="card-body">
+            <div id="visualization" style="position: relative; height: 400px; background: #fafafa;"/>
+            <script type="text/javascript">
+              showGraph("{% url 'netvis:graph' app_name='summaries' model_name='vfbentry' pk=object.id %}", "visualization")
+            </script>
+        </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
