@@ -39,7 +39,9 @@ class Place(IdProvider):
 
     """Holds information about entities."""
     name = models.CharField(
-        max_length=250, blank=True, help_text="Normalized name"
+        max_length=250, blank=True,
+        verbose_name="Ortsname",
+        help_text="Normalisierte Namensansetzung"
     )
     alt_names = models.ManyToManyField(
         AlternativeName,
@@ -200,8 +202,16 @@ class Person(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
     written_name = models.CharField(max_length=300, blank=True)
     written_name_leven = models.CharField(max_length=254, blank=True)
-    forename = models.CharField(max_length=300, blank=True)
-    name = models.CharField(max_length=300, blank=True)
+    forename = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Vorname",
+        help_text="Vorname"
+    )
+    name = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Nachnname",
+        help_text="Nachnname"
+    )
     house_name = models.CharField(max_length=300, blank=True)
     alt_names = models.ManyToManyField(
         AlternativeName,

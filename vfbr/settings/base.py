@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'charts',
     'leaflet',
     'transkribus',
+    'netvis',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"

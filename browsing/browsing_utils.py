@@ -9,6 +9,7 @@ from django.conf import settings
 from django.db.models.fields.related import ManyToManyField
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
@@ -85,7 +86,6 @@ class GenericListView(django_tables2.SingleTableView):
     template_name = 'browsing/generic_list.html'
     init_columns = []
     enable_merge = False
-    enable_delete = False
 
     def get_table_class(self):
         if self.table_class:
@@ -184,7 +184,7 @@ class GenericListView(django_tables2.SingleTableView):
                 try:
                     df = pd.DataFrame(
                         list(
-                            self.model.objects.all().values_list(*[x[0] for x in conf_items])
+                            self.get_queryset().values_list(*[x[0] for x in conf_items])
                         ),
                         columns=[x[1] for x in conf_items]
                     )
@@ -209,6 +209,18 @@ class GenericListView(django_tables2.SingleTableView):
         else:
             response = super(GenericListView, self).render_to_response(context)
             return response
+
+
+class BaseDetailView(DetailView):
+    model = None
+    template_name = 'browsing/generic_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['docstring'] = "{}".format(self.model.__doc__)
+        context['class_name'] = "{}".format(self.model.__name__)
+        context['app_name'] = "{}".format(self.model._meta.app_label)
+        return context
 
 
 class BaseCreateView(CreateView):
@@ -243,23 +255,53 @@ def model_to_dict(instance):
     """
     serializes a model.object to dict, including non editable fields as well as
     ManyToManyField fields
-    Taken from https://stackoverflow.com/questions/21925671/
     """
-    opts = instance._meta
-    data = {}
-    for f in opts.concrete_fields + opts.many_to_many:
-        if isinstance(f, ManyToManyField):
-            if instance.pk is None:
-                data[f.name] = []
+    field_dicts = []
+    for x in instance._meta.get_fields():
+        f_type = "{}".format(type(x))
+        field_dict = {
+                "name": x.name,
+                "help_text": getattr(x, 'help_text', ''),
+            }
+        try:
+            field_dict['extra_fields'] = x.extra
+        except AttributeError:
+            field_dict['extra_fields'] = None
+        if 'reverse_related' in f_type:
+            values = getattr(instance, x.name, None)
+            if values is not None:
+                field_dict['value'] = values.all()
             else:
-                try:
-                    data[f.name] = list(f.value_from_object(instance).values_list('pk', flat=True))
-                except Exception as e:
-                    print(e)
-                    data[f.name] = []
+                field_dict['value'] = []
+            if getattr(x, 'related_name', None) is not None:
+                field_dict['verbose_name'] = getattr(x, 'related_name', x.name)
+            else:
+                field_dict['verbose_name'] = getattr(x, 'verbose_name', x.name)
+            field_dict['f_type'] = 'REVRESE_RELATION'
+        elif 'related.ForeignKey' in f_type:
+            field_dict['verbose_name'] = getattr(x, 'verbose_name', x.name)
+            field_dict['value'] = getattr(instance, x.name, '')
+            field_dict['f_type'] = 'FK'
+        elif 'related.ManyToManyField' in f_type:
+            values = getattr(instance, x.name, None)
+            if values is not None:
+                field_dict['value'] = values.all()
+            else:
+                field_dict['value'] = []
+            field_dict['verbose_name'] = getattr(x, 'verbose_name', x.name)
+            field_dict['f_type'] = 'M2M'
+        elif 'fields.DateTimeField' in f_type:
+            field_value = getattr(instance, x.name, '')
+            field_dict['verbose_name'] = getattr(x, 'verbose_name', x.name)
+            if field_value:
+                field_dict['value'] = (field_value.strftime("%Y-%m-%d %H:%M:%S"))
+                field_dict['f_type'] = 'DateTime'
         else:
-            data[f.name] = f.value_from_object(instance)
-    return data
+            field_dict['verbose_name'] = getattr(x, 'verbose_name', x.name)
+            field_dict['value'] = f"{getattr(instance, x.name, '')}"
+            field_dict['f_type'] = 'SIMPLE'
+        field_dicts.append(field_dict)
+    return field_dicts
 
 
 def create_brows_config_obj(app_name, exclude_fields=[]):

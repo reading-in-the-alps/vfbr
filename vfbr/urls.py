@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^transkribus/', include('transkribus.urls', namespace='transkribus')),
     url(r'^browsing/', include('browsing.urls', namespace='browsing')),
+    url(r'^netvis/', include('netvis.urls', namespace="netvis")),
     url(r'^vocabs/', include('vocabs.urls', namespace='vocabs')),
     url(r'^summaries/', include('summaries.urls', namespace='summaries')),
     url(r'^vocabs-ac/', include('vocabs.dal_urls', namespace='vocabs-ac')),
