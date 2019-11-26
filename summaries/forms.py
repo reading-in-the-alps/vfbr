@@ -22,6 +22,41 @@ class VfbEntryForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'save'),)
 
 
+class AnmerkungenForm(forms.ModelForm):
+    class Meta:
+        model = Anmerkungen
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(AnmerkungenForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class AnmerkungenFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(AnmerkungenFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Accordion(
+                AccordionGroup(
+                    'Basic search options',
+                    'text',
+                    'public',
+                    css_id="basic_search_fields"
+                    ),
+                )
+            )
+
+
 class VfbEntryFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
         super(VfbEntryFilterFormHelper, self).__init__(*args, **kwargs)
@@ -33,11 +68,17 @@ class VfbEntryFilterFormHelper(FormHelper):
         self.layout = Layout(
             Accordion(
                 AccordionGroup(
-                    'Basic search options',
+                    'Einfache Suche',
                     'entry_signatur',
                     'located_in__year',
                     'adm_action_type',
                     css_id="basic_search_fields"
+                    ),
+                AccordionGroup(
+                    'Weitere Optionen',
+                    'book',
+                    'inventory',
+                    css_id="extra_search_fields"
                     ),
                 )
             )
@@ -72,41 +113,6 @@ class VerfachBuchFilterFormHelper(FormHelper):
                     'Basic search options',
                     'signatur',
                     'year',
-                    css_id="basic_search_fields"
-                    ),
-                )
-            )
-
-
-class AnmerkungenForm(forms.ModelForm):
-    class Meta:
-        model = Anmerkungen
-        fields = "__all__"
-
-    def __init__(self, *args, **kwargs):
-        super(AnmerkungenForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_tag = True
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-3'
-        self.helper.field_class = 'col-md-9'
-        self.helper.add_input(Submit('submit', 'save'),)
-
-
-class AnmerkungenFilterFormHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super(AnmerkungenFilterFormHelper, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.form_class = 'genericFilterForm'
-        self.form_method = 'GET'
-        self.helper.form_tag = False
-        self.add_input(Submit('Filter', 'Search'))
-        self.layout = Layout(
-            Accordion(
-                AccordionGroup(
-                    'Basic search options',
-                    'text',
-                    'public',
                     css_id="basic_search_fields"
                     ),
                 )

@@ -9,7 +9,12 @@ from entities.models import Institution
 from . models import *
 
 
-class VfbEntryListFilter(FilterSet):
+class VfbEntryListFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = VfbEntry
+        fields = "__all__"
+
     entry_signatur = django_filters.CharFilter(
         lookup_expr='icontains',
         help_text=VfbEntry._meta.get_field('entry_signatur').help_text,

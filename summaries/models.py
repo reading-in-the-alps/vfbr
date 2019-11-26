@@ -138,6 +138,11 @@ class VfbEntry(IdProvider):
         help_text="Erwähnt der Verfachbucheintrag Bücher"
     )
 
+    class Meta:
+        ordering = [
+            'entry_signatur'
+        ]
+
     @classmethod
     def get_listview_url(self):
         return reverse('summaries:verfachbucheintrag_browse')
