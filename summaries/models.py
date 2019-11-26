@@ -132,6 +132,11 @@ class VfbEntry(IdProvider):
         verbose_name="Inventar",
         help_text="Umfasst der Verfachbucheintrag ein Inventar"
     )
+    book = models.BooleanField(
+        null=True,
+        verbose_name="Bücher",
+        help_text="Erwähnt der Verfachbucheintrag Bücher"
+    )
 
     @classmethod
     def get_listview_url(self):

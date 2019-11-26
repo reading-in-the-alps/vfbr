@@ -18,38 +18,47 @@
 
         <div class="card-body">
             <table class="table table-bordered table-hover">
+              <tr>
+                  <th>
+                      {% get_verbose_name vfbentry "vollregest" %}
+                  </th>
+                  <td>
+                      {{ object.vollregest }}
+                  </td>
+              </tr>
                 <tr>
-                    <th>
-                        Vollregest
-                    </th>
-                    <td>
-                        {{ object.vollregest}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Typ
-                    </th>
+                  <th>
+                      {% get_verbose_name vfbentry "adm_action_type" %}
+                  </th>
                     <td>
                         <a href="{{ object.adm_action_type.get_absolute_url }}">{{ object.adm_action_type }}</a>
                     </td>
                 </tr>
                 <tr>
-                    <th>
-                        Verfachbuch
-                    </th>
+                  <th>
+                      {% get_verbose_name vfbentry "located_in" %}
+                  </th>
                     <td>
                         <a href="{{ object.located_in.get_absolute_url }}">{{ object.located_in }}</a>
                     </td>
                 </tr>
                 <tr>
-                    <th>
-                        Inventar
-                    </th>
+                  <th>
+                      {% get_verbose_name vfbentry "inventory" %}
+                  </th>
                     <td>
                         {{ object.inventory }}
                     </td>
                 </tr>
+                <tr>
+                  <th>
+                      {% get_verbose_name vfbentry "book" %}
+                  </th>
+                    <td>
+                        {{ object.book }}
+                    </td>
+                </tr>
+
                 <tr>
                     <th>
                         Erwähnte Personen
