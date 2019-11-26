@@ -40,7 +40,6 @@ class PersonViewSet(viewsets.ModelViewSet):
     ]
 
 
-
 class InstitutionViewSet(viewsets.ModelViewSet):
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer

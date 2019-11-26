@@ -38,7 +38,7 @@ class PlaceHelperSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PlaceSerializer(serializers.HyperlinkedModelSerializer):
-    alternative_name = AlternativeNameSerializer(many=True)
+    # alternative_name = AlternativeNameSerializer(many=True)
     part_of = PlaceHelperSerializer(many=False)
 
     class Meta:
@@ -47,6 +47,8 @@ class PlaceSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PersonSerializer(serializers.HyperlinkedModelSerializer):
+
+    belongs_to_place = PlaceHelperSerializer(many=True)
 
     class Meta:
         model = Person

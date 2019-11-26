@@ -31,6 +31,17 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 
 `python -m prodigy ner.make-gold vfbr_places vfbr_places_model "http://127.0.0.1:8000/api/persons/?format=json::legacy_id::10" --loader from_drf --label PLACE -U`
 
+
+### vfbr_jobs
+
+`prodigy dataset vfbr_jobs`
+
+`python -m prodigy ner.make-gold vfbr_jobs vfbr_vecs "http://127.0.0.1:8000/api/persons/?format=json::legacy_id::10" --loader from_drf --label JOB -U`
+
+`python -m prodigy ner.make-gold vfbr_jobs vfbr_jobs_model "http://127.0.0.1:8000/api/persons/?format=json::legacy_id::10" --loader from_drf --label JOB -U`
+
+`python -m prodigy ner.batch-train vfbr_jobs vfbr_vecs --output vfbr_jobs_model -U --no-missing`
+
 ## teach terms
 
 `python -m prodigy terms.teach drf vfrb_vecs --seeds seeds.txt `
