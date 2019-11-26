@@ -91,6 +91,7 @@ class VfbEntry(IdProvider):
         SkosConcept, blank=True, null=True,
         verbose_name="Art der Amtshandlung",
         help_text="Welche Art von Amtshandlung wurde in diesem Eintrag protokolliert",
+        related_name="adm_action_type_of_vfbentry",
         on_delete=models.SET_NULL
     )
     start_page = models.IntegerField(
