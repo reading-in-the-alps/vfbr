@@ -13,7 +13,7 @@
     <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
     <script src="{% static 'netvis/js/netvis.js' %}"></script>
     <style>
-        #map { height: 200px; }
+        #map { height: 400px; }
     </style>
 {% endblock %}
 
@@ -26,29 +26,24 @@
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
-                      <tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name place "name" %}
+                            </th>
+                            <td>
+                                {{ object.name }}
+                            </td>
+                        </tr>
+                        {% if object.part_of %}
+                        <tr>
                           <th>
-                              {% get_verbose_name place "name" %}
+                            Teil von
                           </th>
                           <td>
-                              {{ object.name }}
+                            <a href="{{ object.part_of.get_absolute_url }}">{{ object.part_of }}</a>
                           </td>
-                      </tr>
-                      {% if object.living_place_for.all %}
-                        <tr>
-                          <th>Wohn- Wirkungsort von</th>
-                          <td>
-                            {% for x in object.living_place_for.all %}
-                              <li>
-                                <a href="{{ x.get_absolute_url }}">
-                                  <abbr title="{{ x.written_name }}">
-                                    {{ x.forename }} {{ x.name }}
-                                  </abbr>
-                                </a>
-                              </li>
-                            {% endfor %}
                         </tr>
-                      {% endif %}
+                        {% endif %}
                     </table>
                 </div>
             </div>
@@ -59,7 +54,21 @@
                   <h4 class="card-title">Map</h4>
               </div>
               <div class="card-body">
-                  <div id="map"/>
+                {% if object.lat %}
+                    <script type="text/javascript">
+
+                        function map_init_basic (map, options) {
+                                var placeName = "{{ object.name }}"
+                                var lat = "{{ object.lat }}"
+                                var lng = "{{ object.lng }}"
+                                L.marker([parseFloat(lat), parseFloat(lng)]).addTo(map)
+                                .bindPopup(placeName)
+                                .openPopup();
+                            };
+
+                    </script>
+                {% endif %}
+                  {% leaflet_map "yourmap" callback="window.map_init_basic" %}
               </div>
           </div>
           <div class="card">
@@ -73,89 +82,50 @@
                   </script>
               </div>
           </div>
-
         </div>
     </div>
-    <script type="text/javascript">
-        {% if object.lat %}
-            $( document ).ready(function() {
-                var placeName = "{{ object.name }}"
-                var lat = "{{ object.lat }}"
-                var lng = "{{ object.lng }}"
-                var map = L.map('map').setView([lat, lng], 10);
-                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                    maxZoom: 18,
-                    id: 'mapbox.light',
-                    accessToken: 'pk.eyJ1Ijoic2VubmllcmVyIiwiYSI6ImNpbHk1YWV0bDAwZnB2dW01d2l1Y3phdmkifQ.OljQLEhqeAygai2y6VoSwQ'
-                }).addTo(map);
-                L.marker([lat, lng]).addTo(map)
-                .bindPopup(placeName)
-                .openPopup();
-            });
-        {% endif %}
-    </script>
-    <div class="card col-md-12">
-        <div class="card-header">
-            <h3 class="card-title">Beziehungen</h4>
-        </div>
-        <div class="card-body">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">zu Dokumenten</h4>
-                </div>
-                <div class="card-body">
-                    <legend>
-                        Erwähnt in
-                    </legend>
-                    <ul>
-                        {% for x in object.place_mentioned_in_res.all %}
+  </div>
+  <div class="card col-md-12">
+      <div class="card-body">
+        {% if object.place_mentioned_in_res.all %}
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title">zu Dokumenten</h4>
+              </div>
+              <div class="card-body">
+                  <legend>
+                      Erwähnt in
+                  </legend>
+                  <ul>
+                      {% for x in object.place_mentioned_in_res.all %}
+                          <li>
+                              <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                          </li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          </div>
+          {% endif %}
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title">Wohn- Wirkungsort von</h4>
+              </div>
+              <div class="card-body">
+                    {% if object.living_place_for.all %}
+                      <ul>
+                          {% for x in object.living_place_for.all %}
                             <li>
-                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                              <a href="{{ x.get_absolute_url }}">
+                                <abbr title="{{ x.written_name }}">
+                                  {{ x.forename }} {{ x.name }}
+                                </abbr>
+                              </a>
                             </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">zu Institutionen</h4>
-                </div>
-                <div class="card-body">
-                    <ul>
-                        <li>
-                            item 1
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">zu Personen</h4>
-                </div>
-                <div class="card-body">
-                    <legend>
-                        Geburtsort von
-                    </legend>
-                    <ul>
-                        {% for x in object.is_birthplace.all %}
-                            <li>
-                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <legend>
-                        Sterbeort von
-                    </legend>
-                    <ul>
-                        {% for x in object.is_deathplace.all %}
-                            <li>
-                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+                          {% endfor %}
+                      </ul>
+                    {% endif %}
+              </div>
+          </div>
+      </div>
+  </div>
 {% endblock custom%}

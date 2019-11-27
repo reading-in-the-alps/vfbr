@@ -20,6 +20,7 @@
         <meta name="theme-color" content="#ffffff"/>
     <!--favicons end -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,500" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'webpage/css/fundament.css' %}" rel="stylesheet"/>
     <!-- <link rel="stylesheet" href="{% static 'webpage/css/fundament_new.css' %}" rel="stylesheet"/> -->
@@ -216,6 +217,9 @@
             $(document).ready(function() {
                 $.apScrollTop({'onInit': function(evt) {console.log('apScrollTop: init');}});
             });
+        </script>
+        <script>
+          feather.replace()
         </script>
         {% endblock %}
         {% block scripts2 %}

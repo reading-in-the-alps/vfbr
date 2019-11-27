@@ -138,6 +138,14 @@ class VfbEntry(IdProvider):
         verbose_name="Bücher",
         help_text="Erwähnt der Verfachbucheintrag Bücher"
     )
+    trp_page_nr_start = models.CharField(
+            max_length=250, blank=True, help_text="Seitenzahl (Beginn)",
+            verbose_name="Beginn (Seitenzahl) des Transkribus Dokuments"
+    )
+    trp_page_nr_end = models.CharField(
+            max_length=250, blank=True, help_text="Seitenzahl (Ende)",
+            verbose_name="Ende (Seitenzahl) des Transkribus Dokuments"
+    )
 
     class Meta:
         ordering = [
@@ -172,6 +180,20 @@ class VfbEntry(IdProvider):
         if prev:
             return prev.first().id
         return False
+
+    def get_facs_link(self):
+        try:
+            url = reverse(
+                'transkribus:trp_page',
+                kwargs={
+                    'col_id': self.located_in.col_id,
+                    'doc_id': self.located_in.doc_id,
+                    'page_id': self.trp_page_nr_start
+                }
+            )
+        except Exception as e:
+            url = False
+        return url
 
     def __str__(self):
         if self.entry_signatur:

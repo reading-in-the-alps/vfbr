@@ -1,40 +1,96 @@
 {% extends "browsing/generic_detail.html" %}
 {% load staticfiles %}
+{% load transkribus_extras %}
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
 {% block custom %}
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Einträge</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <th>
-                                Signatur
-                            </th>
-                            <th>
-                                Typ
-                            </th>
-                            <th>
-                                Zusammenfassung
-                            </th>
-                        </thead>
-                        {% for x in object.has_entries.all %}
-                            <tr>
-                                <td>
-                                    <a href="{{ x.get_absolute_url }}">{{ x.entry_signatur }}</a>
-                                </td>
-                                <td>
-                                    {{ x.adm_action_type }}
-                                </td>
-                                <td>
-                                    {{ x.vollregest }}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Einträge</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Faksimiles</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="card">
+
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <th>
+                        Signatur
+                    </th>
+                    <th>
+                        Typ
+                    </th>
+                    <th>
+                        Zusammenfassung
+                    </th>
+                    <th>
+                        Inventar
+                    </th>
+                    <th>
+                        Bücher
+                    </th>
+                </thead>
+                {% for x in object.has_entries.all %}
+                    <tr>
+                        <td>
+                            <a href="{{ x.get_absolute_url }}">{{ x.entry_signatur }}</a>
+                        </td>
+                        <td>
+                            {{ x.adm_action_type }}
+                        </td>
+                        <td>
+                            {{ x.vollregest }}
+                        </td>
+                        <td>
+                          {% if x.inventory %}
+                          <i data-feather="check-circle"></i>
+                          {% else %}
+                          <i data-feather="circle"></i>
+                          {% endif %}
+                        </td>
+                        <td>
+                          {% if x.book %}
+                          <i data-feather="check-circle"></i>
+                          {% else %}
+                          <i data-feather="circle"></i>
+                          {% endif %}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    {% if object.doc_id %}
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row">
+                    {% for x in object.trp_fetch_md.trp_return.pageList.pages %}
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    Seite {{ x.pageNr }}
+                                </div>
+                                <div class="card-body">
+                                    <a href="{% url 'transkribus:trp_page' col_id=object.col_id doc_id=object.doc_id page_id=x.pageNr %}"><img src="{{ x.thumbUrl }}" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
+        </div>
+    {% endif %}
+  </div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div>
+
 
 {% endblock %}

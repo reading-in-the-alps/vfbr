@@ -71,10 +71,10 @@ class Place(IdProvider):
     )
 
     def get_geonames_url(self):
-        if self.geonames_id.startswith('ht') and self.geonames_id.endswith('.html'):
-            return self.geonames_id
-        else:
-            return "http://www.geonames.org/{}".format(self.geonames_id)
+        if self.geonames_id:
+            geo_id = re.findall(r'\d+', f"{self.geonames_id}")[0]
+            print(geo_id)
+            return "https://www.geonames.org/{}".format(geo_id)
 
     def get_geonames_rdf(self):
         try:
