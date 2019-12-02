@@ -8,6 +8,7 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Einträge</a>
+    <a class="nav-item nav-link" id="nav-invs-tab" data-toggle="tab" href="#nav-invs" role="tab" aria-controls="nav-invs" aria-selected="false">Inventare</a>
     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Faksimiles</a>
   </div>
 </nav>
@@ -60,6 +61,41 @@
                           {% endif %}
                         </td>
 
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-invs" role="tabpanel" aria-labelledby="nav-invs-tab">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Einträge</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <th>
+                        Signatur
+                    </th>
+                    <th>
+                        Typ
+                    </th>
+                    <th>
+                        Zusammenfassung
+                    </th>
+                </thead>
+                {% for x in object.has_inventories.all %}
+                    <tr>
+                        <td>
+                            <a href="{{ x.get_absolute_url }}">{{ x.inv_signatur }}</a>
+                        </td>
+                        <td>
+                            {{ x.inv_type }}
+                        </td>
+                        <td>
+                            {{ x.excel_row }}
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
