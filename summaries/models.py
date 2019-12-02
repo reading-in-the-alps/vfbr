@@ -156,6 +156,13 @@ class VfbEntry(IdProvider):
         verbose_name="Inventar",
         help_text="Umfasst der Verfachbucheintrag ein Inventar"
     )
+    inventory_entry = models.ForeignKey(
+        'InventoryEntry', blank=True, null=True,
+        verbose_name="Inventar Zusammenfassung",
+        help_text="Systematische Beschreibung des Eintrages",
+        related_name="has_vfb_entry",
+        on_delete=models.SET_NULL
+    )
     book = models.BooleanField(
         null=True,
         verbose_name="Bücher",
