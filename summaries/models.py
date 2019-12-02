@@ -146,7 +146,7 @@ class VfbEntry(IdProvider):
     )
     mentioned_institutions = models.ManyToManyField(
         Institution,
-        max_length=250, blank=True,
+        blank=True,
         verbose_name="Erwähnte Institutionen",
         help_text="Identifizierbare Institutionen, die im Eintrag erwähnt werden.",
         related_name="mentioned_in_entry"
@@ -155,13 +155,6 @@ class VfbEntry(IdProvider):
         null=True,
         verbose_name="Inventar",
         help_text="Umfasst der Verfachbucheintrag ein Inventar"
-    )
-    inventory_entry = models.ForeignKey(
-        'InventoryEntry', blank=True, null=True,
-        verbose_name="Inventar Zusammenfassung",
-        help_text="Systematische Beschreibung des Eintrages",
-        related_name="has_vfb_entry",
-        on_delete=models.SET_NULL
     )
     book = models.BooleanField(
         null=True,
@@ -243,6 +236,11 @@ class InventoryEntry(IdProvider):
         on_delete=models.SET_NULL,
         verbose_name="Übergeordenter Quellenbestand",
         help_text="Ist Teil des übergordneten Quellenbestands."
+    )
+    vfb_entry = models.ManyToManyField(
+        VfbEntry, blank=True, related_name="has_inv_entries",
+        verbose_name="Zugehörige Verfachbucheinträge",
+        help_text="Zugehörigee Verfachbucheinträge"
     )
     inv_type = models.ForeignKey(
         SkosConcept, blank=True, null=True,
