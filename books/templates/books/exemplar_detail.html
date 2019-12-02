@@ -1,0 +1,33 @@
+{% extends "browsing/generic_detail.html" %}
+{% load staticfiles %}
+{% load webpage_extras %}
+{% block title %}{{ object }}{% endblock %}
+{% block custom %}
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                {% get_verbose_name exemplar "related_work" %}
+            </th>
+            <td>
+                <a href="{{ object.related_work.get_absolute_url }}">{{ object.related_work }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {% get_verbose_name exemplar "normdata_id" %}
+            </th>
+            <td>
+                <a href="{{ object.normdata_id }}">{{ object.normdata_id }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {% get_verbose_name exemplar "certainty" %}
+            </th>
+            <td>
+                <a href="{{ object.certainty.get_absolute_url }}">{{ object.certainty }}</a>
+            </td>
+        </tr>
+    </table>
+
+{% endblock custom %}

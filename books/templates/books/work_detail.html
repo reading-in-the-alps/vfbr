@@ -1,0 +1,53 @@
+{% extends "browsing/generic_detail.html" %}
+{% load staticfiles %}
+{% load webpage_extras %}
+{% block title %}{{ object }}{% endblock %}
+{% block custom %}
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                {% get_verbose_name work "title" %}
+            </th>
+            <td>
+                {{ object.title }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Autoren/Herausgeber
+            </th>
+            <td>
+                {% for x in object.creator.all %}
+                    <li>
+                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                    </li>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Exemplare
+            </th>
+            <td>
+                {% for x in object.has_exemplar.all %}
+                    <li>
+                        <a href="{{ x.get_absolute_url }}">{{ x.normdata_id }}</a> 
+                    </li>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Erwähnt in
+            </th>
+            <td>
+                {% for x in object.is_related_work.all %}
+                    <li>
+                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                    </li>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+{% endblock custom %}

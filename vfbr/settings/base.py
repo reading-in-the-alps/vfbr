@@ -3,6 +3,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, '../'))))
 
+REDMINE_ID = 13134
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -24,6 +26,7 @@ INSTALLED_APPS = [
     'browsing',
     'vocabs',
     'entities',
+    'books',
     'stats',
     'summaries',
     'charts',
@@ -152,3 +155,10 @@ LEAFLET_CONFIG = {
         )
     ],
 }
+
+
+LOBID_JSON = "http://lobid.org/gnd/{}.json"
+
+BSB_PATTERN = "http://mdz-nbn-resolving.de/"
+BSB_RDF_URL = "https://opacplus.bsb-muenchen.de/title/{}?format=rdf"
+BSB_ENDPOINT = "https://lod.b3kat.de/sparql"

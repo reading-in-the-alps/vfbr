@@ -77,4 +77,29 @@ urlpatterns = [
         r'^anmerkungen/delete/(?P<pk>[0-9]+)$',
         views.AnmerkungenDelete.as_view(),
         name='anmerkung_delete'),
+    url(
+        r'^inventory/$',
+        views.InventoryEntryListView.as_view(),
+        name='inventory_browse'
+    ),
+    url(
+        r'^inventory/detail/(?P<pk>[0-9]+)$',
+        views.InventoryEntryDetailView.as_view(),
+        name='inventory_detail'
+    ),
+    url(
+        r'^inventory/create/$',
+        views.InventoryEntryCreate.as_view(),
+        name='inventory_create'
+    ),
+    url(
+        r'^inventory/edit/(?P<pk>[0-9]+)$',
+        views.InventoryEntryUpdate.as_view(),
+        name='inventory_edit'
+    ),
+    url(
+        r'^inventory/delete/(?P<pk>[0-9]+)$',
+        views.InventoryEntryDelete.as_view(),
+        name='inventory_delete'
+    ),
 ]

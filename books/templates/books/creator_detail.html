@@ -1,0 +1,70 @@
+{% extends "browsing/generic_detail.html" %}
+{% load staticfiles %}
+{% load webpage_extras %}
+{% block title %}{{ object }}{% endblock %}
+{% block custom %}
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                {% get_verbose_name creator "name" %}
+            </th>
+            <td>
+                {{ object.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {% get_verbose_name creator "gnd_date_of_death" %}
+            </th>
+            <td>
+                {{ object.gnd_date_of_death|date:"Y" }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {% get_verbose_name creator "gnd_geographic_area" %}
+            </th>
+            <td>
+                {% for x in object.gnd_geographic_area.all %}
+                    <li>
+                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                    </li>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                {% get_verbose_name creator "normdata_id" %}
+            </th>
+            <td>
+                <a href="{{ object.normdata_id }}">{{ object.normdata_id }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Autor/Herausgeber von
+            </th>
+            <td>
+                {% for x in object.has_creator.all %}
+                    <li>
+                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                    </li>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+    <legend>Daten aus GND</legend>
+    <table class="table table-bordered table-hover">
+        {% for key, value in object.gnd_data.items %}
+            <tr>
+                <th>
+                    {{ key }}
+                </th>
+                <td>
+                    <code>{{ value }}</code>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock custom %}
