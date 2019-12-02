@@ -20,7 +20,7 @@ class VfbEntryListView(GenericListView):
     table_class = VfbEntryTable
     init_columns = [
         'id',
-        'located_in',
+        'entry_signatur',
         'adm_action_type',
         'inventory',
     ]

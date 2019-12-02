@@ -3,132 +3,158 @@
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
 {% block custom %}
-<div class="card">
+{% block scriptHeader %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/three@latest/build/three.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
+  <script src="{% static 'netvis/js/netvis.js' %}"></script>
+{% endblock %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
 
-    <div class="card-body">
-        <table class="table table-bordered table-hover">
-            <tr>
-                <th>
-                    {% get_verbose_name inventoryentry "inv_type" %}
-                </th>
-                <td>
-                    {{ object.inv_type }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    {% get_verbose_name inventoryentry "vollstaendig" %}
-                </th>
-                <td>
-                    {{ object.vollstaendig }}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    {% get_verbose_name inventoryentry "is_located_in" %}
-                </th>
-                <td>
-                    <a href="{{ object.is_located_in.get_absolute_url }}">{{ object.is_located_in }}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    {% get_verbose_name inventoryentry "main_person" %}
-                </th>
-                <td>
-                    {% for x in object.main_person.all %}
-                        <li>
-                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                        </li>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Erwähnte Personen (Verwaltung)
-                </th>
-                <td>
-                    {% for x in object.adm_person.all %}
-                        <li>
-                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                        </li>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Erwähnte Personen (Verwandtschaft)
-                </th>
-                <td>
-                    {% for x in object.related_person.all %}
-                        <li>
-                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                        </li>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Genannte Personen
-                </th>
-                <td>
-                    {% for x in object.other_person.all %}
-                        <li>
-                            <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                        </li>
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
-        <legend>
-            Origanl Datensatz
-        </legend>
-        <table class="table table-bordered table-hover">
-            {% for key, value in orig_data.items %}
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
                 <tr>
                     <th>
-                        {{ key }}
+                        {% get_verbose_name inventoryentry "inv_type" %}
                     </th>
                     <td>
-                        {{ value }}
+                        {{ object.inv_type }}
                     </td>
                 </tr>
-            {% endfor %}
-        </table>
-        {% if object.annotations %}
-            <legend>Annotationen</legend>
+                <tr>
+                    <th>
+                        {% get_verbose_name inventoryentry "vollstaendig" %}
+                    </th>
+                    <td>
+                        {{ object.vollstaendig }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {% get_verbose_name inventoryentry "is_located_in" %}
+                    </th>
+                    <td>
+                        <a href="{{ object.is_located_in.get_absolute_url }}">{{ object.is_located_in }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {% get_verbose_name inventoryentry "main_person" %}
+                    </th>
+                    <td>
+                        {% for x in object.main_person.all %}
+                            <li>
+                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                            </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Erwähnte Personen (Verwaltung)
+                    </th>
+                    <td>
+                        {% for x in object.adm_person.all %}
+                            <li>
+                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                            </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Erwähnte Personen (Verwandtschaft)
+                    </th>
+                    <td>
+                        {% for x in object.related_person.all %}
+                            <li>
+                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                            </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Genannte Personen
+                    </th>
+                    <td>
+                        {% for x in object.other_person.all %}
+                            <li>
+                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                            </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+            <legend>
+                Origanl Datensatz
+            </legend>
             <table class="table table-bordered table-hover">
-                <thead>
+                {% for key, value in orig_data.items %}
                     <tr>
                         <th>
-                            ID
+                            {{ key }}
                         </th>
-                        <th>
-                            Maschine
-                        </th>
-                        <th>
-                            Mensch
-                        </th>
+                        <td>
+                            {{ value }}
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for x in object.annotations.all %}
-                        <tr>
-                            <td>
-                                <a href="{{ x.get_absolute_url }}">entities</a>
-                            </td>
-                            <td>
-                                {{ x.entity_json|safe }}
-                            </td>
-                            <td>
-                                {{ x.entity_checked|safe }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-
+                {% endfor %}
             </table>
-        {% endif %}
+            {% if object.annotations %}
+                <legend>Annotationen</legend>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Maschine
+                            </th>
+                            <th>
+                                Mensch
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in object.annotations.all %}
+                            <tr>
+                                <td>
+                                    <a href="{{ x.get_absolute_url }}">entities</a>
+                                </td>
+                                <td>
+                                    {{ x.entity_json|safe }}
+                                </td>
+                                <td>
+                                    {{ x.entity_checked|safe }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            {% endif %}
+        </div>
     </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Beziehungen als Netzwerk</h4>
+        </div>
+        <div class="card-body">
+            <div id="visualization" style="position: relative; height: 400px; background: #fafafa;"/>
+            <script type="text/javascript">
+              showGraph("{% url 'netvis:graph' app_name='summaries' model_name='inventoryentry' pk=object.id %}", "visualization")
+            </script>
+        </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
