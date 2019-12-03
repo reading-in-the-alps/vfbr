@@ -1,0 +1,104 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+{% load transkribus_extras %}
+{% block title %}
+    {{ result.extra_info.title }} {{ result.page_id }} / {{ result.extra_info.nrOfPages }}
+{% endblock %}
+{% block content %}
+{% trp_lang as my_lang %}
+<script src="{{ openseadragon_js }}"></script>
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'transkribus:trp_docs' %}">{{ my_lang.docs.doc_plural }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'transkribus:trp_document' col_id=col_id doc_id=doc_id %}">{{ result.extra_info.title }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ result.page_id }}</li>
+            </ol>
+        </nav>
+    </div>
+    <div>
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                <div class="row">
+                    <div class="col-md-2">
+                        {% if prev %}
+                            <h2>
+                                <a href="{{ first_page }}">
+                                    <i data-feather="chevrons-left"></i>
+                                </a>
+                                <br  />
+                                <a href="{{ prev }}">
+                                    <i data-feather="chevron-left"></i>
+                                </a>
+                            </h2>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <h2>
+                            <a href="{% url 'transkribus:trp_document' col_id=col_id doc_id=doc_id %}">{{ result.extra_info.title }}</a>
+                            <small> {{ result.page_id }} / {{ result.extra_info.nrOfPages }}</small>
+                        </h2>
+                        <h4>
+                            <a href="{{ edit_link }}">
+                                <i data-feather="edit"></i>
+                            </a>
+                        </h4>
+                    </div>
+                <div class="col-md-2">
+                    <h2>
+                        {% if next %}
+                        <a href="{{ last_page }}" style="float:right">
+                            <i data-feather="chevrons-right"></i>
+                        </a><br  />
+                        <a href="{{ next }}" style="float:right">
+                            <i data-feather="chevron-right"></i>
+                        </a>
+
+                    </h2>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+            <div class="card body">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>{{ my_lang.page.img_col }}</h2>
+                                </div>
+                                <div class="card-body" id="iiif" style="width: 100%; height: 800px">
+                                    <script type="text/javascript">
+                                        var viewer = OpenSeadragon({
+                                            id: "iiif",
+                                            tileSources: {
+                                                type: 'image',
+                                                url: "{{ result.img_url}}"
+                                            },
+                                            prefixUrl: "{{ openseadragon_img }}"
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>{{ my_lang.page.text_col }}</h2>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        {% for x in result.transcript %}
+                                            {{ x }} <br />
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

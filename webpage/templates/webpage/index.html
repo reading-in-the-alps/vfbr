@@ -10,45 +10,34 @@
                 <h3 style="text-align:center; color: #111;">{% projects_metadata 'subtitle' %}</h3>
                 <h5 style="text-align:center; color: #111;">{% projects_metadata 'description' %}</h5>
             </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+              <form method="get" action="/search">
+                <div class="form-row">
+                  <div class="col-12 col-md-9 mb-2 mb-md-0">
+                    <input type="search" class="form-control form-control-lg" placeholder="Volltextsuche in den Regesten" name="q">
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <button type="submit" class="btn btn-block btn-lg btn-primary" style="background-color:#b08968; border-color:#b08968;">Los!</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <br />
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+              <form method="get" action="{% url 'transkribus:trp_hits' %}">
+                <div class="form-row">
+                  <div class="col-12 col-md-9 mb-2 mb-md-0">
+                    <input type="search" class="form-control form-control-lg" placeholder="Volltextsuche in Verfachbüchern" name="query">
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <button type="submit" class="btn btn-block btn-lg btn-primary" style="background-color:#b08968; border-color:#b08968;">Los!</button>
+                  </div>
+                </div>
+              </form>
+            </div>
         </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h5 class="row-heading pb-2 mb-3 border-bottom"><i class="fas fa-paste"></i> Data-Count</h5>
-            </div>
 
-            <hr />
-            {% create_object_count app='summaries' as models %}
-            {% for x in models %}
-                <div class="col-md-6  text-center">
-                    <div class="card flex-md-row mb-4 box-shadow">
-                        <div class="card-body">
-                            <h4 class="mb-0">{{x.name}}</h4>
-                            <h4 class="count">{{ x.count }}</h4>
-                            {% if x.link %}
-                                <a class="btn btn-main btn-outline-primary btn-sm" href="{{ x.link }}" role="button">View Details</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            {% if user.is_authenticated %}
-            {% create_object_count app='annotations' as models %}
-            {% for x in models %}
-                <div class="col-md-12  text-center">
-                    <div class="card flex-md-row mb-4 box-shadow">
-                        <div class="card-body">
-                            <h4 class="mb-0">{{x.name}}</h4>
-                            <h4 class="count">{{ x.count }}</h4>
-                            {% if x.link %}
-                                <a class="btn btn-main btn-outline-primary btn-sm" href="{{ x.link }}" role="button">View Details</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            {% endif %}
-        </div>
     </div>
 {% endblock %}

@@ -38,7 +38,6 @@ dev_secret.py
 /arche/data/fileList.json
 /vfbr/settings/pg_local.py
 
-/transkribus
 *.csv
 prodigy*
 vfbr_*

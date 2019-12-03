@@ -7,7 +7,6 @@ from crispy_forms.bootstrap import *
 from . models import *
 
 
-
 class InventoryEntryForm(forms.ModelForm):
     class Meta:
         model = InventoryEntry
@@ -153,6 +152,7 @@ class VfbEntryFilterFormHelper(FormHelper):
             Accordion(
                 AccordionGroup(
                     'Einfache Suche',
+                    'vollregest',
                     'entry_signatur',
                     'located_in__year',
                     'adm_action_type',
