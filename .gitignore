@@ -42,10 +42,9 @@ dev_secret.py
 *.csv
 prodigy*
 vfbr_*
-*.txt
 local.py
 !requirements.txt
-
+/whoosh_index
 /myenv
 netvis
 charts

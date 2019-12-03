@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django_filters',
     'django_tables2',
     'rest_framework',
+    'haystack',
     'idprovider',
     'webpage',
     'browsing',
@@ -34,6 +35,13 @@ INSTALLED_APPS = [
     'transkribus',
     'netvis',
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
