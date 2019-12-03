@@ -18,3 +18,8 @@ a:not([href]):not([tabindex]) {
 .create-label {
 	font-weight: 700;
 }
+
+
+.highlighted {
+  background-color: #ffc107;
+}
