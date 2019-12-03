@@ -25,18 +25,18 @@ class VfbEntryListView(GenericListView):
         'inventory',
     ]
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(VfbEntryListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(VfbEntryListView, self).dispatch(*args, **kwargs)
 
 
 class VfbEntryDetailView(DetailView):
     model = VfbEntry
     template_name = 'summaries/verfachbucheintrag_detail.html'
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(VfbEntryDetailView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(VfbEntryDetailView, self).dispatch(*args, **kwargs)
 
 
 class VfbEntryCreate(BaseCreateView):
@@ -80,18 +80,18 @@ class VerfachBuchListView(GenericListView):
         'year',
     ]
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(VerfachBuchListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(VerfachBuchListView, self).dispatch(*args, **kwargs)
 
 
 class VerfachBuchDetailView(DetailView):
     model = VerfachBuch
     template_name = 'summaries/verfachbuch_detail.html'
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(VerfachBuchDetailView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(VerfachBuchDetailView, self).dispatch(*args, **kwargs)
 
 
 class VerfachBuchCreate(BaseCreateView):
@@ -177,6 +177,7 @@ class AnmerkungenDelete(DeleteView):
     def dispatch(self, *args, **kwargs):
         return super(AnmerkungenDelete, self).dispatch(*args, **kwargs)
 
+
 class InventoryEntryListView(GenericListView):
     model = InventoryEntry
     filter_class = InventoryEntryListFilter
@@ -187,9 +188,9 @@ class InventoryEntryListView(GenericListView):
         'inv_signatur',
     ]
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(InventoryEntryListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(InventoryEntryListView, self).dispatch(*args, **kwargs)
 
 
 class InventoryEntryDetailView(DetailView):
@@ -205,10 +206,10 @@ class InventoryEntryDetailView(DetailView):
         except ValueError:
             context['orig_data'] = {}
         return context
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(InventoryEntryDetailView, self).dispatch(*args, **kwargs)
+    #
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(InventoryEntryDetailView, self).dispatch(*args, **kwargs)
 
 
 class InventoryEntryCreate(BaseCreateView):

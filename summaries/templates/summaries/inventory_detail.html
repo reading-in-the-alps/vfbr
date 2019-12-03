@@ -38,7 +38,16 @@
                         {% get_verbose_name inventoryentry "is_located_in" %}
                     </th>
                     <td>
-                        <a href="{{ object.is_located_in.get_absolute_url }}">{{ object.is_located_in }}</a>
+                        <a href="{{ object.is_located_in.get_absolute_url }}">
+                          {{ object.is_located_in }}
+                        </a>
+                        {% if object.vfb_entry.all %}
+                        <ul class="list-unstyled">
+                          {% for x in object.vfb_entry.all %}
+                            <li><small>Verfachbucheintrag:</small> <a href="{{ x.get_absolute_url }}">{{ x }}</a></li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>

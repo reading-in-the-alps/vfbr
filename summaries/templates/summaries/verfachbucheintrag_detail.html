@@ -49,9 +49,15 @@
                     <td>
                       {% if object.inventory %}
                       <i data-feather="check-circle"></i>
+                      {% if object.has_inv_entries.all %}
+                        {% for x in object.has_inv_entries.all %}
+                          <a href="{{ x.get_absolute_url }}">{{ x }}</a></li>
+                        {% endfor %}
+                      {% endif %}
                       {% else %}
                       <i data-feather="circle"></i>
                       {% endif %}
+
                     </td>
                 </tr>
                 <tr>

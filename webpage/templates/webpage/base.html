@@ -71,34 +71,27 @@
                                 <span class="caret"/>
                             </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About project</a>
-                                    <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">Imprint | Impressum</a>
+                                    <a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">Über das Projekt</a>
+                                    <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">Impressum</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 {% if user.is_authenticated %}
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curate and Browse the Data
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stöbern
                                 <span class="caret"/>
                                 </a>
                                 {% else %}
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse the Data
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stöbern
                                 <span class="caret"/>
                                 </a>
                                 {% endif %}
                                 <div class="dropdown-menu">
-                                    {% nav_menu app='summaries' as links %}
-                                    {% for x in links %}
-
-                                            <a class="dropdown-item" href="{{ x.link}}">{{ x.name }}</a>
-
-                                    {% endfor %}
-                                    {% nav_menu app='entities' as links %}
-                                    {% for x in links %}
-
-                                            <a class="dropdown-item" href="{{ x.link}}">{{ x.name }}</a>
-
-                                    {% endfor %}
-
+                                  <a class="dropdown-item" href="{% url 'summaries:verfachbuecher_browse' %}">Verfachbücher</a>
+                                  <a class="dropdown-item" href="{% url 'summaries:verfachbucheintrag_browse' %}">Kurzregesten</a>
+                                  <a class="dropdown-item" href="{% url 'summaries:inventory_browse' %}">Inventarbeschreibungen</a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="{% url 'entities:person_browse' %}">Personen</a>
+                                  <a class="dropdown-item" href="{% url 'entities:place_browse' %}">Orte</a>
                                 </div>
                             </li>
                     {% if 'vocabs' in APPS %}
@@ -125,7 +118,9 @@
                 </form>
                 <div class="navbar-icons">
                     {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'webpage:user_logout' %}"><small>Log-Out <br / />{{ user.get_username }}</small></a>
+                        <a class="nav-link" href="{% url 'webpage:user_logout' %}">
+                          <i class="fas fa-sign-out-alt"></i>
+                        </a>
                     {% else %}
                         <a class="nav-link" href="{% url 'webpage:user_login' %}">
                             <i class="fas fa-sign-in-alt"></i>

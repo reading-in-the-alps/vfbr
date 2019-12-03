@@ -14,15 +14,15 @@
             {% if 'q' in request.GET %}
             <div class="card heading" style="text-align:center">
                 <h1>
-                    {{ page.paginator.count }} Hit(s) {{ total_results|pluralize }} for <strong>{{ request.GET.q }}</strong>
+                    {{ page.paginator.count }} Treffer {{ total_results|pluralize }} für <strong>{{ request.GET.q }}</strong>
                 </h1>
             </div>
             <div class="card-body">
                 <table class="table table-hover">
                     <tr>
                         <th>Score</th>
-                        <th>Class</th>
-                        <th>actual object</th>
+                        <th>Typ</th>
+                        <th>Ergebnis</th>
                     </tr>
                     {% for result in page.object_list %}
                         <tr>
@@ -42,9 +42,9 @@
             <div class="card-footer" style="text-align:center">
                 {% if page.has_previous or page.has_next %}
                     <div>
-                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Zurück {% if page.has_previous %}</a>{% endif %}
                         |
-                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Vor &raquo;{% if page.has_next %}</a>{% endif %}
                         <br />
                     </div>
                 {% endif %}
