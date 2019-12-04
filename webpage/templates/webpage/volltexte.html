@@ -1,0 +1,37 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+{% load webpage_extras %}
+{% block content %}
+
+<section class="showcase">
+  <div class="container-fluid p-0">
+    <div class="row no-gutters justify-content-md-center">
+      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+        <h1>Faksimiles und Volltexte</h1>
+        <p>
+          In rund 500 Arbeitsstunden fotografierte Michael Span an die 120 Verfachbücher im Südtiroler Landesarchiv in Bozen. Die Dabei generierte Datenmenge beläuft sich auf über 53.000 Datein bzw. 270 Gigabyte.
+        </p>
+        <p>
+          Die Bilder wurden anschließend von Martin Kirnbauer in <a href="https://transkribus.eu/">Transkribus</a> hochgeladen, wobei die Ditigalisate eines jeden Verfachbuches zu einem Transkribus-Dokument zusammengefasst und diese mit rudimentären Metadaten versehen wurden:
+            <ul>
+              <li>
+                Vergabe eines repräsentativer Dokumententitel nach dem Muster <code>Verfachbuch {Gericht}, Bd. {Bandnummer}, {Zeitraum}"</code>, also beispielweise <strong>Verfachbuch Oberamtsgericht Bruneck, Bd. 199, 1764/1765</strong>
+              </li>
+              <li>
+                Nennung des Erzeugers der Digitalisate "Fotos: Michael Span"
+              </li>
+              <li>
+                Datierung der Bandes <code>Date of writing From: DD/MM/YYYY To: DD/MM/YYYY</code>
+              </li>
+              <li>Übernahme allfälliger Anmkerungen zur Signatur bzw. Bandangabe</li>
+            </ul>
+        </p>
+        <p>
+          Ebenfalls von Martin Kirnbauer wurde anschließend eine Konkordanz zwischen den Transkribus-Dokumenten und den Datenbankeinträgen zu den Verfachbuch(objekten) der vorliegenden Webapplikation angelegt wodurch es jetzt möglich ist, die Faksimiles in die Webapplikation einzubinden.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

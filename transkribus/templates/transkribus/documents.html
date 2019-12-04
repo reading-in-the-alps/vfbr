@@ -30,9 +30,9 @@
                             <th>
                                 {{ my_lang.docs.page_nr_col }}
                             </th>
-                            <th>
+                            <!-- <th>
                                 {{ my_lang.docs.preview_col }}
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -46,11 +46,11 @@
                                 <td class="transkribus_document-pagecount">
                                     {{ x.nrOfPages }}
                                 </td>
-                                <td class="transkribus_document-preview">
+                                <!-- <td class="transkribus_document-preview">
                                     <a href="{% url 'transkribus:trp_document' col_id=col_id doc_id=x.docId %}">
                                         <img src="{{ x.thumbUrl }}" />
                                     </a>
-                                </td>
+                                </td> -->
                             </tr>
                         {% endfor %}
                     </tbody>
