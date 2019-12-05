@@ -1,14 +1,28 @@
 from copy import deepcopy
 
 from django.conf import settings
+from django.urls import reverse
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.contrib.auth import authenticate, login, logout
 
 from . forms import form_user_login
 from . metadata import PROJECT_METADATA as PM
+
+
+class SearchDistributor(RedirectView):
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        search_loc = self.request.GET.get('where')
+        query_param = self.request.GET.get('q')
+        if search_loc == 'vfb':
+            return f"{reverse('haystack_search')}?q={query_param}"
+        else:
+            return f"{reverse('transkribus:trp_hits')}?query={query_param}"
 
 
 class GenericWebpageView(TemplateView):
