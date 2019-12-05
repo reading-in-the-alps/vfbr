@@ -118,9 +118,21 @@
                         {% endif %}
                     {% endif %}
                 </ul>
-                <form class="form-inline mt-2 mt-md-0" style="margin: .5rem;" method="get" action="/search">
-                    <input name="q" class="form-control mr-sm-2" type="text" placeholder="Über alle Felder suchen" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Suchen</button>
+                <form method="get" action="{% url 'webpage:search_dist' %}" style="padding-right: 1em">
+                  <div class="form-row">
+                    <div class="col-md-4">
+                      <select class="custom-select custom-select-lg mb-3" name="where">
+                        <option value="vfb">Metadaten</option>
+                        <option value="ft">Volltexten</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="search" class="form-control form-control-lg" placeholder="z.B. 'Gasser'" required name="q">
+                    </div>
+                    <div class="col-md-4">
+                      <button type="submit" class="btn btn-block btn-lg btn-primary" style="background-color:#b08968; border-color:#b08968;">Los!</button>
+                    </div>
+                  </div>
                 </form>
                 <div class="navbar-icons">
                     {% if user.is_authenticated %}
