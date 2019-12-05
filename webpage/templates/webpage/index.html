@@ -15,23 +15,19 @@
             3v-4r.“</small>
         </p>
       </div>
-      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+      <div class="col-md-12 mx-auto">
         <form method="get" action="/search" style="margin: 2em">
           <div class="form-row">
-            <div class="col-12 col-md-9 mb-2 mb-md-0">
-              <input type="search" class="form-control form-control-lg" placeholder="Suche in Regesten" name="q">
+            <div class="col-md-4">
+              <select class="custom-select custom-select-lg mb-3" name="where">
+                <option value="vfb">Suche in Metadaten</option>
+                <option value="ft">Suche in Volltexten</option>
+              </select>
             </div>
-            <div class="col-12 col-md-3">
-              <button type="submit" class="btn btn-block btn-lg btn-primary" style="background-color:#b08968; border-color:#b08968;">Los!</button>
+            <div class="col-md-4">
+              <input type="search" class="form-control form-control-lg" placeholder="z.B. 'Gasser'" required name="q">
             </div>
-          </div>
-        </form>
-        <form method="get" action="{% url 'transkribus:trp_hits' %}" style="margin: 1em">
-          <div class="form-row">
-            <div class="col-12 col-md-9 mb-2 mb-md-0">
-              <input type="search" class="form-control form-control-lg" placeholder="Volltextsuche in Verfachbüchern" name="query">
-            </div>
-            <div class="col-12 col-md-3">
+            <div class="col-md-4">
               <button type="submit" class="btn btn-block btn-lg btn-primary" style="background-color:#b08968; border-color:#b08968;">Los!</button>
             </div>
           </div>
