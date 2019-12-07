@@ -5,6 +5,24 @@ from browsing.browsing_utils import MergeColumn
 from entities.models import *
 
 
+class PersonPersonTable(tables.Table):
+    id = tables.LinkColumn()
+    source = tables.LinkColumn(
+        'entities:person_detail',
+        args=[A('source.id')], verbose_name='Source'
+    )
+    rel_type = tables.Column()
+    target = tables.LinkColumn(
+        'entities:person_detail',
+        args=[A('target.id')], verbose_name='Target'
+    )
+
+    class Meta:
+        model = PersonPerson
+        sequence = ('id', 'source', 'rel_type', 'target')
+        attrs = {"class": "table table-responsive table-hover"}
+
+
 class PersonTable(tables.Table):
     id = tables.LinkColumn(
         'entities:person_detail',

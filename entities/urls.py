@@ -29,6 +29,30 @@ urlpatterns = [
         views.PersonDelete.as_view(),
         name='person_delete'),
     url(
+        r'^personperson/$',
+        views.PersonPersonListView.as_view(),
+        name='personperson_browse'
+    ),
+    url(
+        r'^personperson/detail/(?P<pk>[0-9]+)$',
+        views.PersonPersonDetailView.as_view(),
+        name='personperson_detail'
+    ),
+    url(
+        r'^personperson/create/$',
+        views.PersonPersonCreate.as_view(),
+        name='personperson_create'
+    ),
+    url(
+        r'^personperson/edit/(?P<pk>[0-9]+)$',
+        views.PersonPersonUpdate.as_view(),
+        name='personperson_edit'
+    ),
+    url(
+        r'^personperson/delete/(?P<pk>[0-9]+)$',
+        views.PersonPersonDelete.as_view(),
+        name='personperson_delete'),
+    url(
         r'^place/$',
         views.PlaceListView.as_view(),
         name='place_browse'

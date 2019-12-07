@@ -3,7 +3,54 @@ from dal import autocomplete
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit,  Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import Accordion, AccordionGroup
-from .models import Place, AlternativeName, Institution, Person
+from . models import *
+
+
+class PersonPersonFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(PersonPersonFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'source',
+                'target',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    'rel_type',
+                    css_id="more"
+                    ),
+                )
+            )
+
+
+class PersonPersonForm(forms.ModelForm):
+    class Meta:
+        model = PersonPerson
+        fields = "__all__"
+        widgets = {
+            'source': autocomplete.ModelSelect2(
+                url='entities-ac:person-autocomplete'),
+            'target': autocomplete.ModelSelect2(url='entities-ac:person-autocomplete'),
+            'rel_type': autocomplete.ModelSelect2(
+                url='/vocabs-ac/concept-by-colleciton-ac/fam-rel'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PersonPersonForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
 
 
 class PersonFilterFormHelper(FormHelper):

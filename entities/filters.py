@@ -3,7 +3,41 @@ from dal import autocomplete
 
 from vocabs.models import SkosConcept
 from vocabs.filters import generous_concept_filter
-from entities.models import Place, AlternativeName, Institution, Person
+from entities.models import (
+    Place, AlternativeName, Institution, Person, PersonPerson
+)
+
+
+class PersonPersonListFilter(django_filters.FilterSet):
+    source = django_filters.ModelMultipleChoiceFilter(
+        queryset=Person.objects.all(),
+        help_text=PersonPerson._meta.get_field('source').help_text,
+        label=PersonPerson._meta.get_field('source').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="/entities-ac/person-autocomplete",
+            )
+        )
+    target = django_filters.ModelMultipleChoiceFilter(
+        queryset=Person.objects.all(),
+        help_text=PersonPerson._meta.get_field('target').help_text,
+        label=PersonPerson._meta.get_field('target').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="/entities-ac/person-autocomplete",
+            )
+        )
+    rel_type = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.all(),
+        help_text=PersonPerson._meta.get_field('rel_type').help_text,
+        label=PersonPerson._meta.get_field('rel_type').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/concept-by-colleciton-ac/fam-rel-type",
+            )
+        )
+
+    class Meta:
+        model = PersonPerson
+        fields = "__all__"
 
 
 class PersonListFilter(django_filters.FilterSet):
@@ -107,3 +141,35 @@ class AlternativeNameListFilter(django_filters.FilterSet):
         fields = [
             'id'
         ]
+
+
+class PersonPersonListFilter(django_filters.FilterSet):
+    source = django_filters.ModelMultipleChoiceFilter(
+        queryset=Person.objects.all(),
+        help_text=PersonPerson._meta.get_field('source').help_text,
+        label=PersonPerson._meta.get_field('source').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="/entities-ac/person-autocomplete",
+            )
+        )
+    target = django_filters.ModelMultipleChoiceFilter(
+        queryset=Person.objects.all(),
+        help_text=PersonPerson._meta.get_field('target').help_text,
+        label=PersonPerson._meta.get_field('target').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="/entities-ac/person-autocomplete",
+            )
+        )
+    rel_type = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.all(),
+        help_text=PersonPerson._meta.get_field('rel_type').help_text,
+        label=PersonPerson._meta.get_field('rel_type').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/concept-by-colleciton-ac/fam-rel-type",
+            )
+        )
+
+    class Meta:
+        model = PersonPerson
+        fields = "__all__"

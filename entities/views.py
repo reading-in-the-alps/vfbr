@@ -10,8 +10,57 @@ from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateV
 from . filters import *
 from . forms import *
 from . tables import *
-from . models import Person, Place, Institution
+from . models import *
 from . utils import Levenshtein
+
+
+class PersonPersonListView(GenericListView):
+    model = PersonPerson
+    filter_class = PersonPersonListFilter
+    formhelper_class = PersonPersonFilterFormHelper
+    table_class = PersonPersonTable
+    init_columns = [
+        'id',
+        'source',
+        'rel_type',
+        'target',
+    ]
+    enable_merge = True
+
+
+class PersonPersonDetailView(DetailView):
+    model = PersonPerson
+    template_name = 'entities/personperson_detail.html'
+
+
+class PersonPersonCreate(BaseCreateView):
+
+    model = PersonPerson
+    form_class = PersonPersonForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PersonPersonCreate, self).dispatch(*args, **kwargs)
+
+
+class PersonPersonUpdate(BaseUpdateView):
+
+    model = PersonPerson
+    form_class = PersonPersonForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PersonPersonUpdate, self).dispatch(*args, **kwargs)
+
+
+class PersonPersonDelete(DeleteView):
+    model = PersonPerson
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('entities:personperson_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PersonPersonDelete, self).dispatch(*args, **kwargs)
 
 
 class PersonListView(GenericListView):
