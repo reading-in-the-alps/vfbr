@@ -144,9 +144,9 @@
                             </li>
                         {% endfor %}
                     {% endif %}
-                    {% if object.is_main_person %}
+                    {% if object.is_main_person.all %}
                         <legend>
-                            Inventar als verwandte Person
+                            Hauptperson in
                         </legend>
                         {% for x in object.is_main_person.all %}
                             <li>
@@ -156,7 +156,7 @@
                             </li>
                         {% endfor %}
                     {% endif %}
-                    {% if object.is_related_person %}
+                    {% if object.is_related_person.all %}
                         <legend>
                             Inventar als verwandte Person
                         </legend>
