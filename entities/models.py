@@ -198,6 +198,13 @@ class Institution(IdProvider):
         return "{}".format(self.written_name)
 
 
+GENDER = (
+    ('männlich', 'männlich'),
+    ('weiblich', 'weiblich'),
+    ('anders', 'anders'),
+)
+
+
 class Person(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
     written_name = models.CharField(max_length=300, blank=True)
@@ -211,6 +218,10 @@ class Person(IdProvider):
         max_length=300, blank=True,
         verbose_name="Nachnname",
         help_text="Nachnname"
+    )
+    gender = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Geschlecht", choices=GENDER
     )
     house_name = models.CharField(max_length=300, blank=True)
     alt_names = models.ManyToManyField(
