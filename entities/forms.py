@@ -15,17 +15,18 @@ class PersonFilterFormHelper(FormHelper):
         self.helper.form_tag = False
         self.add_input(Submit('Filter', 'Search'))
         self.layout = Layout(
-            Fieldset(
-                'Basic search options',
-                'name',
-                'forename',
-                'written_name',
-                css_id="basic_search_fields"
-                ),
             Accordion(
                 AccordionGroup(
-                    'Advanced search',
-                    'alt_names',
+                    'Namen, Geschlecht',
+                    'name',
+                    'forename',
+                    'written_name',
+                    'gender',
+                    css_id="basic_search_fields"
+                    ),
+                AccordionGroup(
+                    'Berufe, Orte',
+                    'belongs_to_place',
                     'profession',
                     css_id="more"
                     ),

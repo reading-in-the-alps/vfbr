@@ -207,7 +207,11 @@ GENDER = (
 
 class Person(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
-    written_name = models.CharField(max_length=300, blank=True)
+    written_name = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Umfassende Namensansetzung",
+        help_text="Eine möglichst umfassende Namensansetzung mit deren Hilfe es möglich sein sollte, die Person eindeutig zu identifizieren."
+    )
     written_name_leven = models.CharField(max_length=254, blank=True)
     forename = models.CharField(
         max_length=300, blank=True,
