@@ -46,6 +46,12 @@ class PersonListFilter(django_filters.FilterSet):
         help_text=Person._meta.get_field('name').help_text,
         label=Person._meta.get_field('name').verbose_name
         )
+    name_start = django_filters.CharFilter(
+        field_name='name',
+        lookup_expr='startswith',
+        help_text=Person._meta.get_field('name').help_text,
+        label=Person._meta.get_field('name').verbose_name
+        )
     forename = django_filters.CharFilter(
         lookup_expr='icontains',
         help_text=Person._meta.get_field('forename').help_text,

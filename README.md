@@ -42,6 +42,14 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 
 `python -m prodigy ner.batch-train vfbr_jobs vfbr_vecs --output vfbr_jobs_model -U --no-missing`
 
+
+# teach NN
+
+`prodigy ner.make-gold vfbr_nn vfbr_persons_vecs "http://127.0.0.1:8000/api/persons/?format=json::written_name::10" --loader from_drf --label NN -U`
+
+`prodigy ner.batch-train vfbr_nn vfbr_persons_vecs --output vfbr_nn_model -U --no-missing`
+
+
 ## teach terms
 
 `python -m prodigy terms.teach drf vfrb_vecs --seeds seeds.txt `
