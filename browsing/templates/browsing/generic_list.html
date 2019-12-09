@@ -4,6 +4,7 @@
 {% load browsing_extras %}
 {% load charts_extras %}
 
+
 {% load i18n %}
 {% load crispy_forms_field %}
 {% load crispy_forms_tags %}
@@ -102,6 +103,16 @@
                     <div class="card-body">
                         {% with table.paginator.count as total %}
                         <legend>Total results: {{ total }}</legend>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle dropdown-custom" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="fas fa-download"></i>
+                                Download
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a class="dropdown-item" href="{% export_url 'csv' %}">Table Content as csv</a></li>
+                            </ul>
+                        </div>
                             {% if entity == "skosconcept" %}
                             <div class="btn-group" role="group" style="padding-bottom: 10px;">
                               <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="The file will contain only search results">
@@ -260,12 +271,10 @@
                 </div>
             </div>
         </div>
-        {% if 'entities' in APPS %}
-        {% endif %}
     </div>
 
 {% endblock %}
 {% block scripts2 %}
-    {% load_highcharts_js %}
-    {% config_highcharts %}
+  {% load_highcharts_js %}
+  {% config_highcharts %}
 {% endblock scripts2 %}

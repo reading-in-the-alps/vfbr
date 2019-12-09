@@ -43,13 +43,19 @@ for the years 1750-1800 created by Michael Prokosch and Michael Span in the cont
 `python -m prodigy ner.batch-train vfbr_jobs vfbr_vecs --output vfbr_jobs_model -U --no-missing`
 
 
-# teach NN
+# teach NN / VN
 
 `prodigy ner.make-gold vfbr_nn vfbr_persons_vecs "http://127.0.0.1:8000/api/persons/?format=json::written_name::10" --loader from_drf --label NN -U`
 
-`prodigy ner.make-gold vfbr_vn vfbr_persons_vecs "http://127.0.0.1:8000/api/persons/?format=json::written_name::10" --loader from_drf --label VN -U`
+`prodigy ner.make-gold vfbr_nn vfbr_persons_vecs "http://127.0.0.1:8000/api/persons/?format=json&name=Zwischenpruggerin::written_name::10" --loader from_drf --label NN -U`
+
+`prodigy ner.make-gold vfbr_nn vfbr_persons_vecs "http://127.0.0.1:8000/api/persons/?format=json&ordering=name::written_name::10" --loader from_drf --label NN -U`
+
 
 `prodigy ner.batch-train vfbr_nn vfbr_persons_vecs --output vfbr_nn_model -U --no-missing`
+
+# teach VN
+`prodigy ner.make-gold vfbr_nn vfbr_vn_model "http://127.0.0.1:8000/api/persons/?format=json::written_name::10" --loader from_drf --label VN -U`
 
 
 ## teach terms
@@ -68,3 +74,18 @@ useless?
 ## teach
 
 `python -m prodigy ner.teach vfbr_quick vfbr_adm_model http://127.0.0.1:8000/api/vfb-entry/?format=json::vollregest::10 --loader from_drf  -U`
+
+
+## dedupe
+```cmd
+
+pip install csvdedupe
+
+mkdir dedupe
+
+cd dedupe
+
+wget -O data.csv  "http://127.0.0.1:8000/entities/person/?columns=forename&columns=name&name=&forename=&written_name=&gender=m%C3%A4nnlich&Filter=Search&_export=csv"
+
+csvdedupe data.csv  --field_names "Umfassende Namensansetzung" Vorname Name --output_file output.csv
+```
