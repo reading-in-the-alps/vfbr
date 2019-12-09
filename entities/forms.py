@@ -77,6 +77,11 @@ class PersonFilterFormHelper(FormHelper):
                     'profession',
                     css_id="more"
                     ),
+                AccordionGroup(
+                    'Duplikate',
+                    'dedupe_cluster_id',
+                    css_id="duplicates"
+                    ),
                 )
             )
 
