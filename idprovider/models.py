@@ -4,6 +4,7 @@ from django.db import models
 class IdProvider(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    dedupe_cluster_id = models.IntegerField(null=True, blank=True)
 
     @classmethod
     def get_class_name(self):
