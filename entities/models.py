@@ -269,6 +269,59 @@ class Person(IdProvider):
         on_delete=models.SET_NULL
     )
     comment = models.TextField(blank=True)
+    is_main_vfbr = models.BooleanField(
+        blank=True, null=True,
+        verbose_name="Hauptperson eines Verfachbucheintrages",
+        help_text="Hauptperson, die im Verfachbucheintrag erwähnt wird."
+    )
+    is_main = models.BooleanField(
+        blank=True, null=True,
+        verbose_name="Name (Erklärung aus Verfachbuch)",
+        help_text="Identifizierbare Personen, die im Eintrag erwähnt werden."
+    )
+    is_adm = models.BooleanField(
+        blank=True, null=True,
+        verbose_name="Beteiligte (administrative) Personen",
+        help_text="Beteiligte Personen (Beamte, Gerichtsverpflichtete, Zeugen, ...).",
+    )
+    is_related = models.BooleanField(
+        blank=True, null=True,
+        verbose_name="Beteiligte (nicht-administrative) Personen",
+        help_text="Beteiligte Personen (Erbsinteressenten, Gerhaben, Anweiser,\
+        Verkäufer, Verpächter, Käufer, Pächter, ...)."
+    )
+    is_other = models.BooleanField(
+        blank=True, null=True,
+        verbose_name="Sonstig genannte Personen",
+        help_text="Sonstig genannte Personen.",
+    )
+
+    def save(self, *args, **kwargs):
+        if self.mentioned_in_entry.all().count() > 0:
+            self.is_main_vfbr = True
+        else:
+            self.is_main_vfbr = False
+
+        if self.is_main_person.all().count() > 0:
+            self.is_main = True
+        else:
+            self.is_main = False
+
+        if self.is_adm_person.all().count() > 0:
+            self.is_adm = True
+        else:
+            self.is_adm = False
+
+        if self.is_related_person.all().count() > 0:
+            self.is_related = True
+        else:
+            self.is_related = False
+
+        if self.is_other_person.all().count() > 0:
+            self.is_other = True
+        else:
+            self.is_other = False
+        super(Person, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['name']

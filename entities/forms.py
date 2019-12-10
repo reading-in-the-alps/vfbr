@@ -78,6 +78,15 @@ class PersonFilterFormHelper(FormHelper):
                     css_id="more"
                     ),
                 AccordionGroup(
+                    'Erwähnungen',
+                    'is_main_vfbr',
+                    'is_main',
+                    'is_adm',
+                    'is_related',
+                    'is_other',
+                    css_id="mentions"
+                    ),
+                AccordionGroup(
                     'Duplikate',
                     'dedupe_cluster_id',
                     css_id="duplicates"
