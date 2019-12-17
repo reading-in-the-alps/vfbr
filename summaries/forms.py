@@ -94,6 +94,16 @@ class VfbEntryForm(forms.ModelForm):
     class Meta:
         model = VfbEntry
         fields = "__all__"
+        widgets = {
+            'adm_action_type': autocomplete.ModelSelect2(
+                url='/vocabs-ac/concept-by-colleciton-ac/adm-action-type'),
+            'mentioned_person': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:person-autocomplete'
+            ),
+            'mentioned_place': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:place-autocomplete'
+            ),
+        }
 
     def __init__(self, *args, **kwargs):
         super(VfbEntryForm, self).__init__(*args, **kwargs)

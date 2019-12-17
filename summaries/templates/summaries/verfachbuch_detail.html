@@ -34,6 +34,7 @@
                     <th>
                         Bücher
                     </th>
+                    <th>Faksimile</th>
                 </thead>
                 {% for x in object.has_entries.all %}
                     <tr>
@@ -55,6 +56,13 @@
                         </td>
                         <td>
                           {% if x.book %}
+                          <i data-feather="check-circle"></i>
+                          {% else %}
+                          <i data-feather="circle"></i>
+                          {% endif %}
+                        </td>
+                        <td>
+                          {% if x.trp_page_nr_start %}
                           <i data-feather="check-circle"></i>
                           {% else %}
                           <i data-feather="circle"></i>
