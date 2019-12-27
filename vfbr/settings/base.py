@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'leaflet',
     'transkribus',
     'netvis',
+    'myprodigy',
 ]
 
 HAYSTACK_CONNECTIONS = {

@@ -42,7 +42,8 @@
           </ul>
         </p>
         <p>
-          Dazu wurden sowohl die Namen (Vor-, Nach-, Mädchen-, Haus- oder Hofname) als auch die Berufs- und Tätigkeitsbezeichnungen der in den Quellen genannten Personen normalisiert beziehungsweise um gängige Schreibweisen erweitert, wie etwa das folgende Beispiel zeigt:
+          Dazu wurden sowohl die Namen (Vor-, Nach-, Mädchen-, Haus- oder Hofname) als auch die Berufs- und Tätigkeitsbezeichnungen der in den Quellen genannten Personen normalisiert beziehungsweise um gängige Schreibweisen erweitert, wie etwa das
+          folgende Beispiel zeigt:
           <ul>
             <li>
               Mathes [Matthias/Matthäus] Porger [Porgger/Parger/Pargger] (Zimmermann), St. Veit in Prags (Oberamtsgericht Bruneck), (Vater der Ursula Porgerin [Porggerin/Pargerin/Parggerin])
@@ -50,12 +51,13 @@
           </ul>
         </p>
         <p>
-          Bei der Überführung der Daten aus ihren ursprünglichen Formaten (Word und Excel) wurde versucht, diese semistrukturierten Informationen wie eben Berufs- und Ortsbezeichnungen sowie (verwandtschaftliche) Beziehungen zwischen den genannten Personen zu extrahieren und als eigene Datensätze abzulegen. Aus dem ersten Beispiel entstanden somit unter anderem zwei Personen- und zwei Ortseinträge, die allesamt miteinander verknüpft sind.
+          Bei der Überführung der Daten aus ihren ursprünglichen Formaten (Word und Excel) wurde versucht, diese semistrukturierten Informationen wie eben Berufs- und Ortsbezeichnungen sowie (verwandtschaftliche) Beziehungen zwischen den genannten
+          Personen zu extrahieren und als eigene Datensätze abzulegen. Aus dem ersten Beispiel entstanden somit unter anderem zwei Personen- und zwei Ortseinträge, die allesamt miteinander verknüpft sind.
         </p>
         <div class="card">
           <div class="card-header">Person</div>
           <div class="card-body">
-            <table>
+            <table class="table table-hover table-sm">
               <tr>
                 <th>Vorname</th>
                 <td>Mathes [Matthias/Matthäus]</td>
@@ -71,12 +73,109 @@
               <tr>
                 <th>familiäre Verbindungen</th>
                 <td>Vater von Ursula Porgerin [Porggerin/Pargerin/Parggerin]</td>
+              </tr>
             </table>
           </div>
         </div>
+        <div class="card">
+          <div class="card-header">Person</div>
+          <div class="card-body">
+            <table class="table table-hover table-sm">
+              <tr>
+                <th>Vorname</th>
+                <td>Ursula</td>
+              </tr>
+              <tr>
+                <th>Nachname</th>
+                <td>Porgerin [Porggerin/Pargerin/Parggerin]</td>
+              </tr>
+              <tr>
+                <th>Beruf</th>
+                <td>Zimmermann</td>
+              </tr>
+              <tr>
+                <th>familiäre Verbindungen</th>
+                <td>Tochter von Mathes [Matthias/Matthäus] Porger [Porgger/Parger/Pargger</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Ort</div>
+          <div class="card-body">
+            <table class="table table-hover table-sm">
+              <tr>
+                <th>Name</th>
+                <td>St. Veit in Prags</td>
+              </tr>
+              <tr>
+                <th>Teil von</th>
+                <td>Oberamtsgericht Bruneck</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Ort</div>
+          <div class="card-body">
+            <table class="table table-hover table-sm">
+              <tr>
+                <th>Name</th>
+                <td>Oberamtsgericht Bruneck</td>
+              </tr>
+              <tr>
+                <th>Übergeordnete Einheit von</th>
+                <td>St. Veit in Prags</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <p>
+          Eine solche Datenstruktur ermöglicht nun
+          <ul>
+            <li>
+              zielgerichtete Suchabfragen (z. B. alle Zimmermänner aus dem Oberamtsgericht Bruneck),
+            </li>
+            <li>
+              das Nachzeichnen familiäre Netzwerke,
+            </li>
+            <li>
+              ungefähre statistische Abfragen (Verteilung der Berufe).
+            </li>
+          </ul>
+        </p>
+        <p>
+          Die Extraktion der verschiedenen Informationen erfolgte großteils mittels statistischer Modelle. Je nach Informationseinheit (Beruf, Ort, Geschlecht, Name, …) wurden zwischen 100 und 1000 Datensätze manuell von Peter Andorfer annotiert um damit einen Algorithmus zu trainieren, der in der Lage ist, die gewünschten Informationen zu finden. Die einzelnen Modelle erreichten dabei zwischen 75 und 98 Prozent Genauigkeit.
+        </p>
+        <p>
+            Beim Datenimport wurden außerdem Einträge mit identischer Zeichenfolge zusammengeführt. Dies ist insofern zu rechtfertigen, da ja bereits beim Anlegen der ursprünglichen Einträge darauf geachtet wurde, idente Personen exakt gleich und in der oben beschriebenen Art und Weise zu bezeichnen, eben um die eindeutige Identifikation einer Person gewährleisten zu können.
+          </p>
+          <p>
+            Da die ursprünglichen Einträge jedoch ohne technische Unterstützung „händisch“ verfasst wurden, können Tippfehler nicht zur Gänze ausgeschlossen werden. Vor diesem Hintergrund sei hier einmal mehr darauf hingewiesen, dass sich die vorliegende Website aus Arbeitsdaten für den internen Gebrauch speist. Dies hat jedoch zur Folge, dass in der Datenbank potenzielle Dubletten anzutreffen sind. Hinzu kommt, dass für diese Datenbank die Datensätze aus zwei getrennt erstellten Arbeitsbehelfen, mit jeweils eigenen Konventionen, zusammengeführt wurden.
+          </p>
+          <p>
+            Wie man diese Daten möglichst automatisiert verbessern kann, ist Gegenstand der aktuellen Arbeiten am Forschungsprojekt. Erste Ergebnisse werden im Rahmen der <a href="https://www.agrargeschichte.de/pagecontents-ansehen-1329-80-0-VW5zZXJlIFRhZ3VuZ2Vudec0.htm">Jahrestagung der Gesellschaft für Agrargeschichte in Kooperation mit der Arbeitsgemeinschaft Digitale Geschichtswissenschaft des Verbands der Historiker und Historikerinnen Deutschlands im Juni 2020</a> von Michael Span und Peter Andorfer präsentiert werden.
+          </p>
+          <h2>Normalisierung von Personennamen</h2>
+          <p>
+            Konventionen in Word/Excel Dokumenten angesetzt -> v.a. auf Auffindbarkeit geachtete; sprich mögliche alternative Schreibweisen in eckige Klammer gesetzt und mit ‘/’ getrennt. Als ein Beispiel sei etwa „Georg Paur [Baur/Bauer] (Bänderweber), Stefansdorf“ angeführt. Diese Person kann in einem Word oder Exceldokument gefunden werden, egal ob nach „Bauer”, „Baur“ oder „Paur“ gesucht wurde.
+          </p>
+          <p>
+            Im Zuge des Datenimports wurden die Namensansetzung noch weiter vereinheitlicht.
+            <ul>
+              <li>
+                In einem ersten Verarbeitungsschritt wurden alle  Namensvarianten extrahiert und alphabetisch geordnet. Aus „Paur [Baur/Bauer]“ wird somit „Bauer/Baur/Paur”.
+              </li>
+              <li>
+                Ein zweiter Schritt versucht potentielle Dubletten zusammenzuführen. Solche Dubletten können etwa dadurch entstehen, dass nicht immer alle Namensvarianten angeführt wurden oder aber dass aufgrund der Schreibweise in den Quellen nicht jede Variante wahrscheinlich ist. Die Namensanstzungen werden dafür stets zur umfassendern Bezeichnung zusammengeführt. Aus „Bauer/Baur“ wird somit „Bauer/Baur/Paur”.
+              </li>
+            </ul>
+            </p>
+            <p>
+              Ähnliche Schritte wurden auch im Zusammenhang mit Vornamen gesetzt, wobei hier bereits in den Quellen weniger Schreibvarianten anzutreffen sind, mit Ausnahme von Hans/Johann, Vitus/Veit sowie Mathes/Matthias/Matthäus. Nicht zusammengeführt werden Johann bzw Hans mit Johannes da aufgrund der Quellen davon auszugehen ist, dass Johann und Johannes auch von den Zeitgenossen als unterschiedliche Namen verstanden wurden.
+            </p>
       </div>
     </div>
-  </div>
 </section>
 
 {% endblock %}
