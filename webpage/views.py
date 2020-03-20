@@ -3,7 +3,7 @@ from copy import deepcopy
 
 from django.conf import settings
 from django.urls import reverse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView
@@ -95,7 +95,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return render_to_response('webpage/user_logout.html')
+    return render(request, 'webpage/user_logout.html')
 
 
 def handler404(request, exception):
