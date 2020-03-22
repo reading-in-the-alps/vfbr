@@ -9,7 +9,9 @@
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Einträge</a>
     <a class="nav-item nav-link" id="nav-invs-tab" data-toggle="tab" href="#nav-invs" role="tab" aria-controls="nav-invs" aria-selected="false">Inventare</a>
-    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Faksimiles</a>
+    {% if user.is_authenticated %}
+      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Faksimiles</a>
+    {% endif %}
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
@@ -34,7 +36,9 @@
                     <th>
                         Bücher
                     </th>
-                    <th>Faksimile</th>
+                    {% if user.is_authenticated %}
+                      <th>Faksimile</th>
+                    {% endif %}
                 </thead>
                 {% for x in object.has_entries.all %}
                     <tr>
@@ -61,6 +65,7 @@
                           <i data-feather="circle"></i>
                           {% endif %}
                         </td>
+                        {% if user.is_authenticated %}
                         <td>
                           {% if x.trp_page_nr_start %}
                           <i data-feather="check-circle"></i>
@@ -68,7 +73,7 @@
                           <i data-feather="circle"></i>
                           {% endif %}
                         </td>
-
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>
@@ -102,7 +107,9 @@
                             {{ x.inv_type }}
                         </td>
                         <td>
-                            {{ x.excel_row }}
+                            {% for key, value in x.row_as_dict.items %}
+                            <li><small>{{key|safe}}: </small>{{ value }}</li>
+                            {% endfor %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -110,6 +117,7 @@
         </div>
     </div>
   </div>
+  {% if user.is_authenticated %}
   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
     {% if object.doc_id %}
         <div class="card">
@@ -133,6 +141,7 @@
         </div>
     {% endif %}
   </div>
+  {% endif %}
   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
 </div>
 

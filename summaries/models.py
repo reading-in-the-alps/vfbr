@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from django.urls import reverse
 from django.contrib.postgres.fields import JSONField
@@ -413,6 +414,11 @@ class InventoryEntry(IdProvider):
             return "{}".format(self.inv_signatur)
         else:
             return "{}".format(self.id)
+
+    def row_as_dict(self):
+        hansi = json.loads(self.excel_row)
+        print(type(hansi))
+        return hansi
 
     def save_stats(self, *args, **kwargs):
         self.main_person_nr = self.main_person.all().count()
